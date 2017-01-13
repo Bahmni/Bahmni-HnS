@@ -20,10 +20,10 @@ public class LocationConverter implements FHIRConverter<org.openmrs.Location, Lo
     @Override
     public org.openmrs.Location toEMRResource(Location fhirLocation) {
         LocationService locationService = Context.getLocationService();
-        org.openmrs.Location omrsLocation = locationService.getLocationByUuid(fhirLocation.getId());
+        org.openmrs.Location omrsLocation = locationService.getLocationByUuid(fhirLocation.getIdElement().getIdPart());
         if (omrsLocation == null) {
             omrsLocation = new org.openmrs.Location();
-            omrsLocation.setUuid(fhirLocation.getId());
+            omrsLocation.setUuid(fhirLocation.getIdElement().getIdPart());
         }
         omrsLocation.setName(fhirLocation.getName());
         omrsLocation.setDescription(fhirLocation.getDescription());

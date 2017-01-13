@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.0//EN" "http://resources.openmrs.org/doctype/config-1.2.dtd">
+
+<module configVersion="1.2">
+
+    <id>hnsfeedclient</id>
+    <name>${module.name}</name>
+    <version>${module.version}</version>
+    <package>${module.package}</package>
+    <author>Bahmni</author>
+    <description>Atom feed client for Bahmni Resource Sync</description>
+    <activator>org.bahmni.hns.bahmniResourceSyncClient.Activator</activator>
+
+    <require_version>${openmrs.runtime.version}</require_version>
+    <require_modules>
+        <require_module>org.ict4h.openmrs.openmrs-atomfeed</require_module>
+    </require_modules>
+</module>

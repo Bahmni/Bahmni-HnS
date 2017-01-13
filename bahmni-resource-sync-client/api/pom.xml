@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.bahmni.hns</groupId>
+        <artifactId>bahmni-resource-sync-client</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>bahmni-resource-sync-client-api</artifactId>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openmrs.api</groupId>
+            <artifactId>openmrs-api</artifactId>
+            <version>${openmrs.version}</version>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.ict4h</groupId>
+            <artifactId>atomfeed-client</artifactId>
+            <version>${atomfeed.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>rome</groupId>
+                    <artifactId>rome</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.ict4h</groupId>
+            <artifactId>atomfeed-server</artifactId>
+            <version>${atomfeed.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ict4h.openmrs</groupId>
+            <artifactId>openmrs-atomfeed-common</artifactId>
+            <version>${openmrs-atomfeed-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openmrs.healthStandard</groupId>
+            <artifactId>converter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>
