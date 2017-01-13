@@ -4,6 +4,7 @@
 <module configVersion="1.2">
 
     <id>hnsfeedclient</id>
+    <!-- TODO: fiure out why module.name not resolving -->
     <name>${module.name}</name>
     <version>${module.version}</version>
     <package>${module.package}</package>

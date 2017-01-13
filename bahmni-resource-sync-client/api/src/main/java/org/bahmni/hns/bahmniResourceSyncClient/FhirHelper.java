@@ -7,6 +7,7 @@ public class FhirHelper {
   public static IGenericClient getClient() {
     FhirContext fhirContext = FhirContext.forDstu3();
     String fhirBaseUrl = BahmniResourceSyncProperties.getInstance().getFhirBaseUrl();
+   //todo : figure out way for https
     return fhirContext.getRestfulClientFactory().newGenericClient(fhirBaseUrl);
   }
 }

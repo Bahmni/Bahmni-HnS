@@ -30,6 +30,7 @@ public class OpenMRSFeeds extends AllFeeds {
             eventUrlPath = eventUrlPath.substring(0, eventUrlPath.length() - 1);
         }
         String[] pathInfo = eventUrlPath.split("/");
+        //TODO: Fix Hardcoding
         String category = "location";
         String feedId =  "recent";
 

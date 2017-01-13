@@ -37,7 +37,7 @@ public class AtomFeedClientFactory {
   private FeedClient getFeedClient(URI feedURI, AtomFeedProperties atomFeedProperties) {
     AFTransactionManager txMgr = getAtomFeedTransactionManager();
     JdbcConnectionProvider connectionProvider = getConnectionProvider(txMgr);
-
+  //todo:figure out client config for https
     return new AtomFeedClient(
         getAllFeeds(feedURI, connectionProvider),
         getAllMarkers(connectionProvider),

@@ -12,6 +12,7 @@ public class EventWorkerFactory implements EventWorker {
 
   private EventWorkerFactory() {
     workers.put("location", new LocationEventWorker());
+    //TODO: Fix Hardcoding, find better way of adding worker
   }
 
   public static EventWorkerFactory getInstance() {
