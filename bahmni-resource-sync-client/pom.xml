@@ -21,7 +21,7 @@
         <openmrs.version>2.0.2</openmrs.version>
         <openmrs-atomfeed-common.version>2.5.5-SNAPSHOT</openmrs-atomfeed-common.version>
         <openmrs.runtime.version>2.0.2</openmrs.runtime.version>
-        <module.id>hnsatomfeedclient</module.id>
+        <module.id>${project.artifactId}</module.id>
         <module.name>${project.name}</module.name>
         <module.version>${project.version}</module.version>
         <module.package>${project.groupId}.${module.id}</module.package>
@@ -29,6 +29,12 @@
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>

@@ -12,7 +12,6 @@ public class LocationResourceSyncTask extends AbstractTask {
 
   @Override
   public void execute() {
-    //TODO: add migration to register Task
     BahmniResourceSyncProperties properties = BahmniResourceSyncProperties.getInstance();
     FeedClient feedClient;
     try {
