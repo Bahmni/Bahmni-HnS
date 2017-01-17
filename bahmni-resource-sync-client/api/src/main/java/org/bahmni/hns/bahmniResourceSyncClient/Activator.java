@@ -8,7 +8,6 @@ public class Activator extends BaseModuleActivator {
 
     Log log = LogFactory.getLog(Activator.class);
 
-
     @Override
     public void started() {
         log.info("Started the Bahmni Resource Sync Atom Feed Client module");

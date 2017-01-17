@@ -26,6 +26,7 @@
         <module.version>${project.version}</module.version>
         <module.package>${project.groupId}.${module.id}</module.package>
         <hapiFhirBaseVersion>2.2</hapiFhirBaseVersion>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <build>

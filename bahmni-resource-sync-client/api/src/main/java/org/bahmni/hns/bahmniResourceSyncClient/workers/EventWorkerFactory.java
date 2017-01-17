@@ -26,7 +26,6 @@ public class EventWorkerFactory implements EventWorker {
     return workers.get(event.getTitle().toLowerCase());
   }
 
-
   public void process(Event event) {
     getEventWorker(event).process(event);
   }
