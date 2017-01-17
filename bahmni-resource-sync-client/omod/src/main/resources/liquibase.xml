@@ -1,0 +1,16 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="location_sync_task" author="Bahmni|Gaurav">
+        <comment>Add location sync tesk</comment>
+        <sql>
+            INSERT INTO scheduler_task_config(name, schedulable_class, start_time, start_time_pattern, repeat_interval,
+            start_on_startup, started, created_by, date_created, uuid)
+            VALUES ('Location Sync Task', 'org.bahmni.hns.task.LocationResourceSyncTask', now(), 'MM/dd/yyyy HH:mm:ss',
+            10, 1, 0, 1, curdate(), uuid());
+        </sql>
+        
+    </changeSet>
+</databaseChangeLog>
