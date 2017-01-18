@@ -2,12 +2,19 @@ package org.bahmni.hns.bahmniResourceSyncClient;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.IGenericClient;
+import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor;
 
 public class FhirHelper {
-  public static IGenericClient getClient() {
-    FhirContext fhirContext = FhirContext.forDstu3();
-    String fhirBaseUrl = BahmniResourceSyncProperties.getInstance().getFhirBaseUrl();
-   //todo : figure out way for https
-    return fhirContext.getRestfulClientFactory().newGenericClient(fhirBaseUrl);
-  }
+    public static IGenericClient getClient() {
+        FhirContext fhirContext = FhirContext.forDstu3();
+        BahmniResourceSyncProperties bahmniResourceSyncProperties = BahmniResourceSyncProperties.getInstance();
+        String fhirBaseUrl = bahmniResourceSyncProperties.getFhirBaseUrl();
+        //todo : figure out way for https
+        IGenericClient genericClient = fhirContext.getRestfulClientFactory().newGenericClient(fhirBaseUrl);
+        BasicAuthInterceptor authInterceptor =
+                new BasicAuthInterceptor(bahmniResourceSyncProperties.getFhirApiUserName(),
+                        bahmniResourceSyncProperties.getFhirApiPassword());
+        genericClient.registerInterceptor(authInterceptor);
+        return genericClient;
+    }
 }

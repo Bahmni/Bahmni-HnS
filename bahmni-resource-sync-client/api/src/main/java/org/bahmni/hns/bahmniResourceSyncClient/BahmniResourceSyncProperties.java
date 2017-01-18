@@ -20,6 +20,9 @@ public class BahmniResourceSyncProperties extends AtomFeedProperties {
   private static final String READ_TIMEOUT = "feed.replyTimeoutInMilliseconds";
   private static final String LOCATION_FEED_URI = "feed.location.uri";
   private static final String FHIR_BASE_URL = "fhir.base.url";
+  private static final String FHIR_USER_NAME = "fhir.api.username";
+  private static final String FHIR_PASSWORD = "fhir.api.password";
+
 
   private static BahmniResourceSyncProperties bahmniResourceSyncProperties;
   private Properties properties;
@@ -62,6 +65,12 @@ public class BahmniResourceSyncProperties extends AtomFeedProperties {
   }
   public String getFhirBaseUrl() {
     return  getProperty(FHIR_BASE_URL);
+  }
+  public String getFhirApiUserName() {
+    return getProperty(FHIR_USER_NAME);
+  }
+  public String getFhirApiPassword() {
+    return  getProperty(FHIR_PASSWORD);
   }
 
   private String getProperty(String key) {
