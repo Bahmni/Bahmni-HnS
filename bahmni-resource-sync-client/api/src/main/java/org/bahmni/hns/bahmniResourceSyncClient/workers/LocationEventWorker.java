@@ -15,19 +15,21 @@ public class LocationEventWorker implements EventWorker {
     Log log = LogFactory.getLog(LocationEventWorker.class);
 
     LocationService locationService;
+    FhirClientFactory fhirClientFactory;
 
     public LocationEventWorker() {
-        this(new LocationService());
+        this(new LocationService(), new FhirClientFactory());
     }
 
-    public LocationEventWorker(LocationService locationService) {
+    public LocationEventWorker(LocationService locationService, FhirClientFactory fhirClientFactory) {
         this.locationService = locationService;
+        this.fhirClientFactory = fhirClientFactory;
     }
 
     public void process(Event event) {
         String contentUrl = event.getContent();
         String uuid = getUuid(contentUrl);
-        Location location = (Location) FhirClientFactory.getClientFor(Location.class).getResource(uuid);
+        Location location = (Location) fhirClientFactory.getClientFor(Location.class).getResource(uuid);
         locationService.save(location);
     }
 

@@ -11,7 +11,7 @@ public class EventWorkerFactory implements EventWorker {
   private static EventWorkerFactory eventWorkerFactory;
 
   private EventWorkerFactory() {
-    workers.put("location", new LocationEventWorker());
+   registerWorker(EventTitles.LOCATION_TITLE, new LocationEventWorker());
     //TODO: Fix Hardcoding, find better way of adding worker
   }
 
@@ -20,6 +20,9 @@ public class EventWorkerFactory implements EventWorker {
       eventWorkerFactory = new EventWorkerFactory();
     }
     return eventWorkerFactory;
+  }
+  public void registerWorker(String title,EventWorker worker){
+    workers.put(title, worker);
   }
 
   public EventWorker getEventWorker(Event event) {
