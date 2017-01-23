@@ -23,7 +23,6 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<Location, o
         omrsLocation.setName(fhirLocation.getName());
         omrsLocation.setDescription(fhirLocation.getDescription());
 
-        //Set address
         Address address = fhirLocation.getAddress();
         omrsLocation.setCityVillage(address.getCity());
         omrsLocation.setCountry(address.getCountry());

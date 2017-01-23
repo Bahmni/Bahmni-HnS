@@ -7,13 +7,19 @@ import org.hl7.fhir.dstu3.model.Location.LocationStatus;
 import org.hl7.fhir.dstu3.model.StringType;
 import org.junit.Before;
 import org.junit.Test;
+import org.openmrs.LocationTag;
 import org.openmrs.api.context.Context;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverterRegistry;
+import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
+import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import java.util.List;
+import java.util.Set;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertEquals;
 
 public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensitiveTest {
@@ -31,7 +37,7 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
     public void shouldConvertOpenMrsLocationToFhirLocation() throws Exception {
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1002);
 
-        Location fhirLocation = converter.convert(openMRSLocation);
+        FhirLocation fhirLocation = (FhirLocation) converter.convert(openMRSLocation);
 
         assertEquals(openMRSLocation.getUuid(), fhirLocation.getId());
         assertEquals(openMRSLocation.getName(), fhirLocation.getName());
@@ -48,9 +54,9 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
         assertEquals(StringUtils.defaultString(openMRSLocation.getAddress3(), ""), addressLines.get(2).getValueNotNull());
         assertEquals(StringUtils.defaultString(openMRSLocation.getAddress4(), ""), addressLines.get(3).getValueNotNull());
         assertEquals(StringUtils.defaultString(openMRSLocation.getAddress5(), ""), addressLines.get(4).getValueNotNull());
-        assertEquals(openMRSLocation.getLatitude(),fhirLocation.getPosition().getLatitude().toString());
-        assertEquals(openMRSLocation.getLongitude(),fhirLocation.getPosition().getLongitude().toString());
-        assertEquals(LocationStatus.ACTIVE,fhirLocation.getStatus());
+        assertEquals(openMRSLocation.getLatitude(), fhirLocation.getPosition().getLatitude().toString());
+        assertEquals(openMRSLocation.getLongitude(), fhirLocation.getPosition().getLongitude().toString());
+        assertEquals(LocationStatus.ACTIVE, fhirLocation.getStatus());
         assertEquals(openMRSLocation.getParentLocation().getUuid(), fhirLocation.getPartOf().getReferenceElement().getIdPart());
     }
 
@@ -58,6 +64,22 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
     public void shouldSetStatusToInactiveWhenLocationIsRetired() throws Exception {
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1003);
         Location fhirLocation = converter.convert(openMRSLocation);
-        assertEquals(LocationStatus.INACTIVE,fhirLocation.getStatus());
+        assertEquals(LocationStatus.INACTIVE, fhirLocation.getStatus());
+    }
+
+    @Test
+    public void shouldMapLocationTags() throws Exception {
+        org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1002);
+        FhirLocation fhirLocation = (FhirLocation) converter.convert(openMRSLocation);
+        Set<LocationTag> openMRSLocationTags = openMRSLocation.getTags();
+        List<FhirLocationTag> fhirLocationTags = fhirLocation.getFhirLocationTag();
+
+        for (LocationTag tag : openMRSLocationTags) {
+            assertThat(fhirLocationTags, hasItem(toFhirLocationTag(tag)));
+        }
+    }
+
+    private FhirLocationTag toFhirLocationTag(LocationTag tag) {
+        return new FhirLocationTag(tag.getUuid(), tag.getName(), tag.getDescription());
     }
 }

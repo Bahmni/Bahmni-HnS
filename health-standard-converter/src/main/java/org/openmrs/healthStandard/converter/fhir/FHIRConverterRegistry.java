@@ -1,6 +1,6 @@
 package org.openmrs.healthStandard.converter.fhir;
 
-import org.openmrs.Location;
+import org.hl7.fhir.dstu3.model.Location;
 import org.openmrs.healthStandard.converter.ConverterSameOrderException;
 import org.openmrs.healthStandard.converter.fhir.fhirToOpenMRS.FhirToOpenMRSLocationConverter;
 import org.openmrs.healthStandard.converter.fhir.openMRSToFhir.OpenMRSToFhirLocationConverter;
@@ -28,8 +28,8 @@ public class FHIRConverterRegistry {
     }
 
     private void initialiseConverters() {
-        registerConverter(Location.class, org.hl7.fhir.dstu3.model.Location.class, new OpenMRSToFhirLocationConverter());
-        registerConverter(org.hl7.fhir.dstu3.model.Location.class, Location.class, new FhirToOpenMRSLocationConverter());
+        registerConverter(org.openmrs.Location.class, Location.class, new OpenMRSToFhirLocationConverter());
+        registerConverter(Location.class, org.openmrs.Location.class, new FhirToOpenMRSLocationConverter());
     }
 
     public <S, T> FHIRConverter<S, T> getConverterFor(Class<S> sourceClass, Class<T> targetClass) {

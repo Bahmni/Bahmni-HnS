@@ -4,27 +4,28 @@ import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Location;
 import org.hl7.fhir.dstu3.model.Reference;
 import org.hl7.fhir.dstu3.model.StringType;
+import org.openmrs.LocationTag;
 import org.openmrs.healthStandard.converter.fhir.FHIRConstants;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
+import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
+import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs.Location, Location> {
+public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs.Location, FhirLocation> {
 
     @Override
-    public Location convert(org.openmrs.Location omrsLocation) {
-        Location fhirLocation = new Location();
+    public FhirLocation convert(org.openmrs.Location omrsLocation) {
+        FhirLocation fhirLocation = new FhirLocation();
 
-        //Set resource id
         fhirLocation.setId(omrsLocation.getUuid());
-
-        //Set name and location description
         fhirLocation.setName(omrsLocation.getName());
         fhirLocation.setDescription(omrsLocation.getDescription());
 
-        //Set address
         Address address = new Address();
         address.setCity(omrsLocation.getCityVillage());
         address.setDistrict(omrsLocation.getCountyDistrict());
@@ -52,7 +53,7 @@ public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs
             position.setLatitude(latitude);
         }
 
-        if (!omrsLocation.isRetired()) {
+        if (!omrsLocation.getRetired()) {
             fhirLocation.setStatus(Location.LocationStatus.ACTIVE);
         } else {
             fhirLocation.setStatus(Location.LocationStatus.INACTIVE);
@@ -61,9 +62,18 @@ public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs
         if (omrsLocation.getParentLocation() != null) {
             Reference parent = new Reference();
             parent.setDisplay(omrsLocation.getParentLocation().getName());
-            parent.setReference(FHIRConstants.LOCATION+"/"+omrsLocation.getParentLocation().getUuid());
+            parent.setReference(FHIRConstants.LOCATION + "/" + omrsLocation.getParentLocation().getUuid());
             fhirLocation.setPartOf(parent);
         }
+
+        Set<LocationTag> tags = omrsLocation.getTags();
+        List<FhirLocationTag> fhirLocationTags = tags
+                .stream()
+                .map(tag -> new FhirLocationTag(tag.getUuid(), tag.getName(), tag.getDescription()))
+                .collect(Collectors.toList());
+        fhirLocation.setFhirLocationTag(fhirLocationTags);
+
         return fhirLocation;
     }
+
 }
