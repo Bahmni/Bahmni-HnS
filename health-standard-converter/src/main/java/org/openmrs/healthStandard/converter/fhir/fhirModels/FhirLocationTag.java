@@ -66,4 +66,16 @@ public class FhirLocationTag extends BackboneElement {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
+
+    public String getName() {
+        return name.getValue();
+    }
+
+    public String getDescription() {
+        return description.getValue();
+    }
+
+    public String getUuid() {
+        return uuid.getValue();
+    }
 }

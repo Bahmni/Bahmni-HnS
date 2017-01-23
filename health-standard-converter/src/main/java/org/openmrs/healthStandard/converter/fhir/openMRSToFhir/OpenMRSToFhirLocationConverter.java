@@ -69,9 +69,9 @@ public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs
         Set<LocationTag> tags = omrsLocation.getTags();
         List<FhirLocationTag> fhirLocationTags = tags
                 .stream()
-                .map(tag -> new FhirLocationTag(tag.getUuid(), tag.getName(), tag.getDescription()))
+                .map(tag -> new FhirLocationTag(tag.getUuid(),tag.getName(), tag.getDescription()))
                 .collect(Collectors.toList());
-        fhirLocation.setFhirLocationTag(fhirLocationTags);
+        fhirLocation.setFhirLocationTags(fhirLocationTags);
 
         return fhirLocation;
     }

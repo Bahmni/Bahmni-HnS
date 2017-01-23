@@ -16,8 +16,8 @@ public class FhirLocationTest {
     public void shouldSerializeAndDeserializeFhirLocation() throws Exception {
         FhirLocation fhirLocation = new FhirLocation();
         fhirLocation.setId("Location/SomeId");
-        FhirLocationTag fhirLocationTag = new FhirLocationTag("someUuid", "VisitLocation", "VisitLocation");
-        fhirLocation.setFhirLocationTag(Arrays.asList(fhirLocationTag));
+        FhirLocationTag fhirLocationTag = new FhirLocationTag("someUuis","VisitLocation", "VisitLocation");
+        fhirLocation.setFhirLocationTags(Arrays.asList(fhirLocationTag));
         IParser parser = FhirContext.forDstu3().newJsonParser();
 
         String encodedLocation = parser.encodeResourceToString(fhirLocation);
@@ -25,8 +25,8 @@ public class FhirLocationTest {
         FhirLocation parsedLocation = parser.parseResource(FhirLocation.class, encodedLocation);
 
         assertEquals(fhirLocation.getId(), parsedLocation.getId());
-        for (FhirLocationTag tag : fhirLocation.getFhirLocationTag()) {
-            assertThat(fhirLocation.getFhirLocationTag(), hasItem(tag));
+        for (FhirLocationTag tag : fhirLocation.getFhirLocationTags()) {
+            assertThat(fhirLocation.getFhirLocationTags(), hasItem(tag));
         }
 
 

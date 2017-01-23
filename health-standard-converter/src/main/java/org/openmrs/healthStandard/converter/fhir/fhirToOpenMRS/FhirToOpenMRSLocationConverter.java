@@ -4,16 +4,19 @@ import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Location;
 import org.hl7.fhir.dstu3.model.Reference;
 import org.hl7.fhir.dstu3.model.StringType;
+import org.openmrs.LocationTag;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
+import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
+import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class FhirToOpenMRSLocationConverter implements FHIRConverter<Location, org.openmrs.Location> {
+public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocation, org.openmrs.Location> {
     @Override
-    public org.openmrs.Location convert(Location fhirLocation) {
+    public org.openmrs.Location convert(FhirLocation fhirLocation) {
         LocationService locationService = Context.getLocationService();
         org.openmrs.Location omrsLocation = locationService.getLocationByUuid(fhirLocation.getIdElement().getIdPart());
         if (omrsLocation == null) {
@@ -53,6 +56,14 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<Location, o
             if (omrsLocationParent != null) {
                 omrsLocation.setParentLocation(omrsLocationParent);
             }
+        }
+        for (FhirLocationTag fhirLocationTag: (fhirLocation).getFhirLocationTags()) {
+            //TODO: should We consider uuid or name
+            LocationTag locationTag = locationService.getLocationTagByName(fhirLocationTag.getName());
+            if(locationTag == null){
+                locationTag = new LocationTag(fhirLocationTag.getName(),fhirLocationTag.getDescription());
+            }
+            omrsLocation.addTag(locationTag);
         }
         return omrsLocation;
     }

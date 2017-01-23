@@ -6,6 +6,7 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import ca.uhn.fhir.util.ElementUtil;
 import org.hl7.fhir.dstu3.model.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.openmrs.healthStandard.converter.fhir.FhirExtensionUrls.locationTagUrl;
@@ -13,21 +14,21 @@ import static org.openmrs.healthStandard.converter.fhir.FhirExtensionUrls.locati
 @ResourceDef(name = "Location")
 public class FhirLocation extends Location {
 
-    @Child(name = "fhirLocationTag")
+    @Child(name = "fhirLocationTags")
     @Extension(url = locationTagUrl, definedLocally = false, isModifier = false)
-    protected List<FhirLocationTag> fhirLocationTag;
+    protected List<FhirLocationTag> fhirLocationTags = new ArrayList<>();
 
-    public List<FhirLocationTag> getFhirLocationTag() {
-        return fhirLocationTag;
+    public List<FhirLocationTag> getFhirLocationTags() {
+        return fhirLocationTags;
     }
 
-    public void setFhirLocationTag(List<FhirLocationTag> theFhirLocationTag) {
-        fhirLocationTag = theFhirLocationTag;
+    public void setFhirLocationTags(List<FhirLocationTag> theFhirLocationTag) {
+        fhirLocationTags = theFhirLocationTag;
     }
 
     @Override
     public boolean isEmpty() {
-        return super.isEmpty() && ElementUtil.isEmpty(fhirLocationTag);
+        return super.isEmpty() && ElementUtil.isEmpty(fhirLocationTags);
     }
 
 }

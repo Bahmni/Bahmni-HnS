@@ -72,7 +72,7 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1002);
         FhirLocation fhirLocation = (FhirLocation) converter.convert(openMRSLocation);
         Set<LocationTag> openMRSLocationTags = openMRSLocation.getTags();
-        List<FhirLocationTag> fhirLocationTags = fhirLocation.getFhirLocationTag();
+        List<FhirLocationTag> fhirLocationTags = fhirLocation.getFhirLocationTags();
 
         for (LocationTag tag : openMRSLocationTags) {
             assertThat(fhirLocationTags, hasItem(toFhirLocationTag(tag)));
@@ -80,6 +80,6 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
     }
 
     private FhirLocationTag toFhirLocationTag(LocationTag tag) {
-        return new FhirLocationTag(tag.getUuid(), tag.getName(), tag.getDescription());
+        return new FhirLocationTag(tag.getUuid(),tag.getName(), tag.getDescription());
     }
 }

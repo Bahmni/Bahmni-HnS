@@ -32,7 +32,7 @@ public class FHIRConverterRegistry {
         registerConverter(Location.class, org.openmrs.Location.class, new FhirToOpenMRSLocationConverter());
     }
 
-    public <S, T> FHIRConverter<S, T> getConverterFor(Class<S> sourceClass, Class<T> targetClass) {
+    public  FHIRConverter getConverterFor(Class sourceClass, Class targetClass) {
         return fhirConverters.get(new ConverterType(sourceClass, targetClass));
     }
 
