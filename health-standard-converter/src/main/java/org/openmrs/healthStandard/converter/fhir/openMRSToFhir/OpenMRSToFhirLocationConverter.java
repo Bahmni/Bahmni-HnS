@@ -8,13 +8,11 @@ import org.openmrs.LocationTag;
 import org.openmrs.healthStandard.converter.fhir.FHIRConstants;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
-import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs.Location, FhirLocation> {
 
@@ -67,12 +65,12 @@ public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs
         }
 
         Set<LocationTag> tags = omrsLocation.getTags();
-        List<FhirLocationTag> fhirLocationTags = tags
-                .stream()
-                .map(tag -> new FhirLocationTag(tag.getUuid(),tag.getName(), tag.getDescription()))
-                .collect(Collectors.toList());
-        fhirLocation.setFhirLocationTags(fhirLocationTags);
+        if (tags != null) {
+            for (LocationTag tag : tags) {
+                fhirLocation.addTag(new StringType(tag.getUuid()));
 
+            }
+        }
         return fhirLocation;
     }
 

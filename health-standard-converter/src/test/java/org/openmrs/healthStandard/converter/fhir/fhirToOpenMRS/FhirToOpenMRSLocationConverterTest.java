@@ -6,12 +6,14 @@ import org.hl7.fhir.dstu3.model.Location.LocationStatus;
 import org.hl7.fhir.dstu3.model.Reference;
 import org.hl7.fhir.dstu3.model.StringType;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.openmrs.LocationTag;
 import org.openmrs.api.context.Context;
+import org.openmrs.healthStandard.converter.exceptions.EntityNotFoundException;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverterRegistry;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
-import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import java.util.Arrays;
@@ -22,7 +24,8 @@ import static org.junit.Assert.assertNotEquals;
 
 public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensitiveTest {
     static final String LOCATION_DATA_SET = "location-data-set.xml";
-
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
     private FhirToOpenMRSLocationConverter converter;
 
     @Before
@@ -86,32 +89,30 @@ public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensiti
     }
 
     @Test
-    public void shouldMapLocationTags() throws Exception {
+    public void shouldThrowExceptionWhenLocationTagsDoseNotExist() throws Exception {
         FhirLocation fhirLocation = new FhirLocation();
-        FhirLocationTag fhirLocationTag = new FhirLocationTag("soemID","visitLocation", "visitLocation");
-        fhirLocation.setFhirLocationTags(Arrays.asList(fhirLocationTag));
+        StringType fhirLocationTag = new StringType("someId");
+        fhirLocation.addTag(fhirLocationTag);
         fhirLocation.setStatus(LocationStatus.ACTIVE);
 
+        expectedEx.expect(EntityNotFoundException.class);
+        expectedEx.expectMessage("Location Tag with uuid=someId does not exist");
         org.openmrs.Location omrsLocation = converter.convert(fhirLocation);
-        LocationTag locationTag = omrsLocation.getTags().iterator().next();
-        assertEquals("visitLocation",locationTag.getName());
-        assertEquals("visitLocation",locationTag.getDescription());
-
     }
+
     @Test
     public void shouldMapExistingLocationTags() throws Exception {
         FhirLocation fhirLocation = new FhirLocation();
-        String existingTagName = "Department";
-        FhirLocationTag fhirLocationTag = new FhirLocationTag("someUUid",existingTagName,null);
-        fhirLocation.setFhirLocationTags(Arrays.asList(fhirLocationTag));
+        String existingUuid = "0d0eaea2-47ed-11df-bc8b-001e378eb67e";
+
+        StringType fhirLocationTag = new StringType(existingUuid);
+        fhirLocation.addTag(fhirLocationTag);
         fhirLocation.setStatus(LocationStatus.ACTIVE);
 
         org.openmrs.Location omrsLocation = converter.convert(fhirLocation);
         LocationTag locationTag = omrsLocation.getTags().iterator().next();
-        assertEquals(existingTagName,locationTag.getName());
-        assertEquals("random department",locationTag.getDescription());
-        assertEquals("0d0eaea2-47ed-11df-bc8b-001e378eb67e",locationTag.getUuid());
-
-
+        assertEquals("Department", locationTag.getName());
+        assertEquals("random department", locationTag.getDescription());
+        assertEquals(existingUuid, locationTag.getUuid());
     }
 }

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Location;
 import org.hl7.fhir.dstu3.model.Location.LocationStatus;
+import org.hl7.fhir.dstu3.model.PrimitiveType;
 import org.hl7.fhir.dstu3.model.StringType;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +13,11 @@ import org.openmrs.api.context.Context;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverterRegistry;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
-import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -72,14 +73,14 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1002);
         FhirLocation fhirLocation = (FhirLocation) converter.convert(openMRSLocation);
         Set<LocationTag> openMRSLocationTags = openMRSLocation.getTags();
-        List<FhirLocationTag> fhirLocationTags = fhirLocation.getFhirLocationTags();
+        List<String> fhirLocationTag = toString(fhirLocation.getFhirLocationTags());
 
         for (LocationTag tag : openMRSLocationTags) {
-            assertThat(fhirLocationTags, hasItem(toFhirLocationTag(tag)));
+            assertThat(fhirLocationTag, hasItem(tag.getUuid()));
         }
     }
 
-    private FhirLocationTag toFhirLocationTag(LocationTag tag) {
-        return new FhirLocationTag(tag.getUuid(),tag.getName(), tag.getDescription());
+    private List<String> toString(List<StringType> fhirTag) {
+        return fhirTag.stream().map(PrimitiveType::getValue).collect(Collectors.toList());
     }
 }

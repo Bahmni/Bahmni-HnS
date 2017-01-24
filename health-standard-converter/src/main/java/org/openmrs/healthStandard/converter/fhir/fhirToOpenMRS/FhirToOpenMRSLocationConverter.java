@@ -7,9 +7,9 @@ import org.hl7.fhir.dstu3.model.StringType;
 import org.openmrs.LocationTag;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.healthStandard.converter.exceptions.EntityNotFoundException;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
-import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -57,11 +57,11 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocatio
                 omrsLocation.setParentLocation(omrsLocationParent);
             }
         }
-        for (FhirLocationTag fhirLocationTag: (fhirLocation).getFhirLocationTags()) {
-            //TODO: should We consider uuid or name
-            LocationTag locationTag = locationService.getLocationTagByName(fhirLocationTag.getName());
-            if(locationTag == null){
-                locationTag = new LocationTag(fhirLocationTag.getName(),fhirLocationTag.getDescription());
+        for (StringType fhirLocationTag : (fhirLocation).getFhirLocationTags()) {
+            String uuid = fhirLocationTag.getValue();
+            LocationTag locationTag = locationService.getLocationTagByUuid(uuid);
+            if (locationTag == null) {
+                throw new EntityNotFoundException(String.format("Location Tag with uuid=%s does not exist", uuid));
             }
             omrsLocation.addTag(locationTag);
         }
@@ -70,7 +70,7 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocatio
 
 
     private void setAddressForOpenmrsLocation(org.openmrs.Location omrsLocation, List<StringType> addressStrings) {
-       //TODO:clean up
+        //TODO:clean up
         for (int i = 0; i < addressStrings.size(); i++) {
             switch (i + 1) {
                 case 1:

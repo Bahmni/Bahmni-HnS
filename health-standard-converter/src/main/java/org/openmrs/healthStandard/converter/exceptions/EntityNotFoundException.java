@@ -1,0 +1,7 @@
+package org.openmrs.healthStandard.converter.exceptions;
+
+public class EntityNotFoundException extends RuntimeException {
+    public EntityNotFoundException(String message) {
+        super(message);
+    }
+}

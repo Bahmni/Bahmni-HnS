@@ -7,15 +7,11 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.openmrs.LocationTag;
 import org.openmrs.api.context.Context;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
-import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocationTag;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -49,22 +45,5 @@ public class LocationServiceTest {
         Mockito.verify(openmrsLocationService).saveLocation(locationCaptor.capture());
         org.openmrs.Location savedLocation = locationCaptor.getValue();
         assertEquals(fhirLocation.getIdElement().getIdPart(), savedLocation.getUuid());
-    }
-
-    @Test
-    public void shouldSaveLocationTagToOpenmrs() throws Exception {
-        FhirLocation fhirLocation = new FhirLocation();
-        fhirLocation.setId("SomeId");
-        fhirLocation.setStatus(LocationStatus.ACTIVE);
-        FhirLocationTag fhirLocationTag = new FhirLocationTag("TestTag","Test Tag");
-        fhirLocation.setFhirLocationTags(Arrays.asList(fhirLocationTag));
-
-        fhirLocationsService = new LocationService();
-        fhirLocationsService.save(fhirLocation);
-
-        ArgumentCaptor<org.openmrs.LocationTag> locationTagCaptor = ArgumentCaptor.forClass(org.openmrs.LocationTag.class);
-        Mockito.verify(openmrsLocationService).saveLocationTag(locationTagCaptor.capture());
-        LocationTag locationTag = locationTagCaptor.getValue();
-        assertEquals(fhirLocationTag.getName(), locationTag.getName());
     }
 }
