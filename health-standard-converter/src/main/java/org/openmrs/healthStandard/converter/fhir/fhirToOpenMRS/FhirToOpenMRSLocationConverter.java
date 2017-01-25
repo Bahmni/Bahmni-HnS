@@ -11,52 +11,31 @@ import org.openmrs.healthStandard.converter.exceptions.EntityNotFoundException;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
 
 public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocation, org.openmrs.Location> {
+
+    public static final int MAX_ADDRESS_LINES = 15;
+    private LocationService locationService;
+
     @Override
     public org.openmrs.Location convert(FhirLocation fhirLocation) {
-        LocationService locationService = Context.getLocationService();
-        org.openmrs.Location omrsLocation = locationService.getLocationByUuid(fhirLocation.getIdElement().getIdPart());
-        if (omrsLocation == null) {
-            omrsLocation = new org.openmrs.Location();
-            omrsLocation.setUuid(fhirLocation.getIdElement().getIdPart());
-        }
+        locationService = Context.getLocationService();
+        org.openmrs.Location omrsLocation = getOpenMrsLocation(fhirLocation);
         omrsLocation.setName(fhirLocation.getName());
         omrsLocation.setDescription(fhirLocation.getDescription());
+        updateAddress(fhirLocation, omrsLocation);
+        updatePosition(fhirLocation, omrsLocation);
+        updateStatus(fhirLocation, omrsLocation);
+        updateParentLocation(fhirLocation, omrsLocation);
+        updateLocationTags(fhirLocation, omrsLocation);
+        return omrsLocation;
+    }
 
-        Address address = fhirLocation.getAddress();
-        omrsLocation.setCityVillage(address.getCity());
-        omrsLocation.setCountry(address.getCountry());
-        omrsLocation.setStateProvince(address.getState());
-        omrsLocation.setCountyDistrict(address.getDistrict());
-        omrsLocation.setPostalCode(address.getPostalCode());
-        List<StringType> addressStrings = address.getLine();
-        setAddressForOpenmrsLocation(omrsLocation, addressStrings);
-
-        Location.LocationPositionComponent position = fhirLocation.getPosition();
-        BigDecimal latitute = position.getLatitude();
-        BigDecimal longitute = position.getLongitude();
-        if (latitute != null && longitute != null) {
-            omrsLocation.setLatitude(latitute.toString());
-            omrsLocation.setLongitude(longitute.toString());
-        }
-        String status = fhirLocation.getStatus().toString();
-        if (status.equalsIgnoreCase(Location.LocationStatus.ACTIVE.toString())) {
-            omrsLocation.setRetired(false);
-        } else if (status.equalsIgnoreCase((Location.LocationStatus.INACTIVE.toString()))) {
-            omrsLocation.setRetired(true);
-        }
-
-        Reference parentReference = fhirLocation.getPartOf();
-        if (parentReference != null) {
-            String parentUuid = parentReference.getReferenceElement().getIdPart();
-            org.openmrs.Location omrsLocationParent = locationService.getLocationByUuid(parentUuid);
-            if (omrsLocationParent != null) {
-                omrsLocation.setParentLocation(omrsLocationParent);
-            }
-        }
+    private void updateLocationTags(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
         for (StringType fhirLocationTag : (fhirLocation).getFhirLocationTags()) {
             String uuid = fhirLocationTag.getValue();
             LocationTag locationTag = locationService.getLocationTagByUuid(uuid);
@@ -65,29 +44,68 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocatio
             }
             omrsLocation.addTag(locationTag);
         }
+    }
+
+    private void updateParentLocation(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
+        Reference parentReference = fhirLocation.getPartOf();
+        String parentUuid = parentReference.getReferenceElement().getIdPart();
+        org.openmrs.Location omrsLocationParent = null;
+        if (parentUuid != null) {
+            omrsLocationParent = locationService.getLocationByUuid(parentUuid);
+            if (omrsLocationParent == null) {
+                throw new EntityNotFoundException(String.format("Parent Location with uuid=%s does not exist", parentUuid));
+            }
+        }
+        omrsLocation.setParentLocation(omrsLocationParent);
+    }
+
+    private void updateStatus(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
+        String status = fhirLocation.getStatus().toString();
+        if (status.equalsIgnoreCase(Location.LocationStatus.ACTIVE.toString())) {
+            omrsLocation.setRetired(false);
+        } else if (status.equalsIgnoreCase((Location.LocationStatus.INACTIVE.toString()))) {
+            omrsLocation.setRetired(true);
+        }
+    }
+
+    private void updatePosition(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
+        Location.LocationPositionComponent position = fhirLocation.getPosition();
+        BigDecimal latitute = position.getLatitude();
+        BigDecimal longitute = position.getLongitude();
+        if (latitute != null && longitute != null) {
+            omrsLocation.setLatitude(latitute.toString());
+            omrsLocation.setLongitude(longitute.toString());
+        }
+    }
+
+    private void updateAddress(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
+        Address address = fhirLocation.getAddress();
+        omrsLocation.setCityVillage(address.getCity());
+        omrsLocation.setCountry(address.getCountry());
+        omrsLocation.setStateProvince(address.getState());
+        omrsLocation.setCountyDistrict(address.getDistrict());
+        omrsLocation.setPostalCode(address.getPostalCode());
+        List<StringType> addressStrings = address.getLine();
+        setAddressLinesForOpenmrsLocation(omrsLocation, addressStrings);
+    }
+
+    private org.openmrs.Location getOpenMrsLocation(FhirLocation fhirLocation) {
+        org.openmrs.Location omrsLocation = locationService.getLocationByUuid(fhirLocation.getIdElement().getIdPart());
+        if (omrsLocation == null) {
+            omrsLocation = new org.openmrs.Location();
+            omrsLocation.setUuid(fhirLocation.getIdElement().getIdPart());
+        }
         return omrsLocation;
     }
 
-
-    private void setAddressForOpenmrsLocation(org.openmrs.Location omrsLocation, List<StringType> addressStrings) {
-        //TODO:clean up
-        for (int i = 0; i < addressStrings.size(); i++) {
-            switch (i + 1) {
-                case 1:
-                    omrsLocation.setAddress1(addressStrings.get(i).toString());
-                    break;
-                case 2:
-                    omrsLocation.setAddress2(addressStrings.get(i).toString());
-                    break;
-                case 3:
-                    omrsLocation.setAddress3(addressStrings.get(i).toString());
-                    break;
-                case 4:
-                    omrsLocation.setAddress4(addressStrings.get(i).toString());
-                    break;
-                case 5:
-                    omrsLocation.setAddress5(addressStrings.get(i).toString());
-                    break;
+    private void setAddressLinesForOpenmrsLocation(org.openmrs.Location omrsLocation, List<StringType> addressStrings) {
+        for (int i = 0; i < addressStrings.size() && i < MAX_ADDRESS_LINES; i++) {
+            String methodName = "setAddress" + (i + 1);
+            try {
+                Method method = org.openmrs.Location.class.getMethod(methodName, String.class);
+                method.invoke(omrsLocation, addressStrings.get(i).getValue());
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException("Error executing method " + methodName, e);
             }
         }
     }

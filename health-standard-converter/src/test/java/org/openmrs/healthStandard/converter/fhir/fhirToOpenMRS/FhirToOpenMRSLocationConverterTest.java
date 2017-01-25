@@ -1,5 +1,6 @@
 package org.openmrs.healthStandard.converter.fhir.fhirToOpenMRS;
 
+import org.hamcrest.core.IsNull;
 import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Location;
 import org.hl7.fhir.dstu3.model.Location.LocationStatus;
@@ -18,9 +19,9 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensitiveTest {
     static final String LOCATION_DATA_SET = "location-data-set.xml";
@@ -97,7 +98,7 @@ public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensiti
 
         expectedEx.expect(EntityNotFoundException.class);
         expectedEx.expectMessage("Location Tag with uuid=someId does not exist");
-        org.openmrs.Location omrsLocation = converter.convert(fhirLocation);
+        converter.convert(fhirLocation);
     }
 
     @Test
@@ -114,5 +115,32 @@ public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensiti
         assertEquals("Department", locationTag.getName());
         assertEquals("random department", locationTag.getDescription());
         assertEquals(existingUuid, locationTag.getUuid());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenParentLocationDoesNotExist() throws Exception {
+        FhirLocation fhirLocation = new FhirLocation();
+        fhirLocation.setStatus(LocationStatus.ACTIVE);
+        Reference parent = new Reference();
+        parent.setReference("Location/" + "someIdThatIsNotPresent");
+        fhirLocation.setPartOf(parent);
+
+        expectedEx.expect(EntityNotFoundException.class);
+        expectedEx.expectMessage("Parent Location with uuid=someIdThatIsNotPresent does not exist");
+        converter.convert(fhirLocation);
+    }
+
+    @Test
+    public void shouldResetParentLocationToNullWhenItIsRemoved() throws Exception {
+        FhirLocation fhirLocation = new FhirLocation();
+        fhirLocation.setId("6f42abbc-caac-40ae-a94e-9277ea15c125");
+        fhirLocation.setName("SomeName");
+        fhirLocation.setStatus(LocationStatus.ACTIVE);
+        fhirLocation.setPartOf(null);
+        org.openmrs.Location omrsLocation = converter.convert(fhirLocation);
+
+        org.openmrs.Location parentLocation = omrsLocation.getParentLocation();
+        System.out.println(parentLocation);
+        assertThat(parentLocation, is(nullValue()));
     }
 }
