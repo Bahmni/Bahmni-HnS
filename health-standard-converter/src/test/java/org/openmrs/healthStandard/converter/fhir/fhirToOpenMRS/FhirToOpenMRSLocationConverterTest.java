@@ -18,6 +18,7 @@ import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
@@ -142,5 +143,24 @@ public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensiti
         org.openmrs.Location parentLocation = omrsLocation.getParentLocation();
         System.out.println(parentLocation);
         assertThat(parentLocation, is(nullValue()));
+    }
+
+    @Test
+    public void shouldRemoveLocationTags() throws Exception {
+        FhirLocation fhirLocation = new FhirLocation();
+        String locationTagUuid = "001e503a-47ed-11df-bc8b-001e378eb67e";
+
+        fhirLocation.setId("f08ba64b-ea57-4a41-b33c-9dfc59b0c60a");
+        fhirLocation.setName("someName");
+        fhirLocation.addTag(new StringType(locationTagUuid));
+        fhirLocation.setStatus(LocationStatus.ACTIVE);
+
+        org.openmrs.Location omrsLocation = converter.convert(fhirLocation);
+        Set<LocationTag> tags = omrsLocation.getTags();
+        assertEquals(1, tags.size());
+
+        LocationTag locationTag = tags.iterator().next();
+        assertEquals("General Hospital", locationTag.getName());
+        assertEquals("test desc", locationTag.getDescription());
     }
 }

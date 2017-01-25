@@ -15,6 +15,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocation, org.openmrs.Location> {
 
@@ -36,14 +38,21 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocatio
     }
 
     private void updateLocationTags(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
-        for (StringType fhirLocationTag : (fhirLocation).getFhirLocationTags()) {
-            String uuid = fhirLocationTag.getValue();
-            LocationTag locationTag = locationService.getLocationTagByUuid(uuid);
-            if (locationTag == null) {
-                throw new EntityNotFoundException(String.format("Location Tag with uuid=%s does not exist", uuid));
-            }
-            omrsLocation.addTag(locationTag);
+        Set<LocationTag> locationTags = fhirLocation.getFhirLocationTags()
+                .stream()
+                .map(this::findLocationTag)
+                .collect(Collectors.toSet());
+
+        omrsLocation.setTags(locationTags);
+    }
+
+    private LocationTag findLocationTag(StringType fhirLocationTag) {
+        String locationTagUuid = fhirLocationTag.getValue();
+        LocationTag locationTag = locationService.getLocationTagByUuid(locationTagUuid);
+        if(locationTag == null){
+            throw new EntityNotFoundException(String.format("Location Tag with uuid=%s does not exist", locationTagUuid));
         }
+        return locationTag;
     }
 
     private void updateParentLocation(FhirLocation fhirLocation, org.openmrs.Location omrsLocation) {
