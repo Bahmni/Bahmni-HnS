@@ -19,7 +19,7 @@
               country="India" postal_code="560034" latitude="100.8" longitude="420.0"
               date_created="2005-01-01 00:00:00.0" retired="false" uuid="c9ae3a36-7466-4a56-8f06-3bfbc64103f4"/>
     <location location_id="1003" name="Test Level A Child Location 2" parent_location="1001" creator="1"
-              date_created="2005-01-01 00:00:00.0" retired="true" uuid="6f42abbc-caac-40ae-a94e-9277ea15c125"/>
+              date_created="2005-01-01 00:00:00.0" retired="true" retire_reason="useless location" uuid="6f42abbc-caac-40ae-a94e-9277ea15c125"/>
 
     <location_tag location_tag_id="1" name="General Hospital" description="test desc" creator="1"
                   date_created="2005-01-01 00:00:00.0" retired="false" uuid="001e503a-47ed-11df-bc8b-001e378eb67e"/>

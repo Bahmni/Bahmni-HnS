@@ -24,6 +24,60 @@ public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs
         fhirLocation.setName(omrsLocation.getName());
         fhirLocation.setDescription(omrsLocation.getDescription());
 
+        setAddress(omrsLocation, fhirLocation);
+
+        setPosition(omrsLocation, fhirLocation);
+
+        setStatus(omrsLocation, fhirLocation);
+
+        setParentLocation(omrsLocation, fhirLocation);
+
+        setTags(omrsLocation, fhirLocation);
+        return fhirLocation;
+    }
+
+    private void setTags(org.openmrs.Location omrsLocation, FhirLocation fhirLocation) {
+        Set<LocationTag> tags = omrsLocation.getTags();
+        if (tags != null) {
+            for (LocationTag tag : tags) {
+                fhirLocation.addTag(new StringType(tag.getUuid()));
+
+            }
+        }
+    }
+
+    private void setParentLocation(org.openmrs.Location omrsLocation, FhirLocation fhirLocation) {
+        if (omrsLocation.getParentLocation() != null) {
+            Reference parent = new Reference();
+            parent.setDisplay(omrsLocation.getParentLocation().getName());
+            parent.setReference(FHIRConstants.LOCATION + "/" + omrsLocation.getParentLocation().getUuid());
+            fhirLocation.setPartOf(parent);
+        }
+    }
+
+    private void setStatus(org.openmrs.Location omrsLocation, FhirLocation fhirLocation) {
+        if (!omrsLocation.getRetired()) {
+            fhirLocation.setStatus(Location.LocationStatus.ACTIVE);
+        } else {
+            fhirLocation.setStatus(Location.LocationStatus.INACTIVE);
+            fhirLocation.setInactivationReason(new StringType(omrsLocation.getRetireReason()));
+        }
+    }
+
+    private void setPosition(org.openmrs.Location omrsLocation, FhirLocation fhirLocation) {
+        Location.LocationPositionComponent position = fhirLocation.getPosition();
+        if (omrsLocation.getLongitude() != null && !omrsLocation.getLongitude().isEmpty()) {
+            BigDecimal longitude = new BigDecimal(omrsLocation.getLongitude());
+            position.setLongitude(longitude);
+        }
+
+        if (omrsLocation.getLatitude() != null && !omrsLocation.getLatitude().isEmpty()) {
+            BigDecimal latitude = new BigDecimal(omrsLocation.getLatitude());
+            position.setLatitude(latitude);
+        }
+    }
+
+    private void setAddress(org.openmrs.Location omrsLocation, FhirLocation fhirLocation) {
         Address address = new Address();
         address.setCity(omrsLocation.getCityVillage());
         address.setDistrict(omrsLocation.getCountyDistrict());
@@ -39,39 +93,6 @@ public class OpenMRSToFhirLocationConverter implements FHIRConverter<org.openmrs
         address.setLine(addressStrings);
         address.setUse(Address.AddressUse.WORK);
         fhirLocation.setAddress(address);
-
-        Location.LocationPositionComponent position = fhirLocation.getPosition();
-        if (omrsLocation.getLongitude() != null && !omrsLocation.getLongitude().isEmpty()) {
-            BigDecimal longitude = new BigDecimal(omrsLocation.getLongitude());
-            position.setLongitude(longitude);
-        }
-
-        if (omrsLocation.getLatitude() != null && !omrsLocation.getLatitude().isEmpty()) {
-            BigDecimal latitude = new BigDecimal(omrsLocation.getLatitude());
-            position.setLatitude(latitude);
-        }
-
-        if (!omrsLocation.getRetired()) {
-            fhirLocation.setStatus(Location.LocationStatus.ACTIVE);
-        } else {
-            fhirLocation.setStatus(Location.LocationStatus.INACTIVE);
-        }
-
-        if (omrsLocation.getParentLocation() != null) {
-            Reference parent = new Reference();
-            parent.setDisplay(omrsLocation.getParentLocation().getName());
-            parent.setReference(FHIRConstants.LOCATION + "/" + omrsLocation.getParentLocation().getUuid());
-            fhirLocation.setPartOf(parent);
-        }
-
-        Set<LocationTag> tags = omrsLocation.getTags();
-        if (tags != null) {
-            for (LocationTag tag : tags) {
-                fhirLocation.addTag(new StringType(tag.getUuid()));
-
-            }
-        }
-        return fhirLocation;
     }
 
 }

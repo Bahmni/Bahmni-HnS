@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensitiveTest {
 
     static final String LOCATION_DATA_SET = "location-data-set.xml";
-    private FHIRConverter<org.openmrs.Location, Location> converter;
+    private FHIRConverter<org.openmrs.Location, FhirLocation> converter;
 
     @Before
     public void setUp() throws Exception {
@@ -38,7 +38,7 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
     public void shouldConvertOpenMrsLocationToFhirLocation() throws Exception {
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1002);
 
-        FhirLocation fhirLocation = (FhirLocation) converter.convert(openMRSLocation);
+        FhirLocation fhirLocation = converter.convert(openMRSLocation);
 
         assertEquals(openMRSLocation.getUuid(), fhirLocation.getId());
         assertEquals(openMRSLocation.getName(), fhirLocation.getName());
@@ -64,14 +64,15 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
     @Test
     public void shouldSetStatusToInactiveWhenLocationIsRetired() throws Exception {
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1003);
-        Location fhirLocation = converter.convert(openMRSLocation);
+        FhirLocation fhirLocation = converter.convert(openMRSLocation);
         assertEquals(LocationStatus.INACTIVE, fhirLocation.getStatus());
+        assertEquals(openMRSLocation.getRetireReason(), fhirLocation.getInactivationReason().getValue());
     }
 
     @Test
     public void shouldMapLocationTags() throws Exception {
         org.openmrs.Location openMRSLocation = Context.getLocationService().getLocation(1002);
-        FhirLocation fhirLocation = (FhirLocation) converter.convert(openMRSLocation);
+        FhirLocation fhirLocation =  converter.convert(openMRSLocation);
         Set<LocationTag> openMRSLocationTags = openMRSLocation.getTags();
         List<String> fhirLocationTag = toString(fhirLocation.getFhirLocationTags());
 

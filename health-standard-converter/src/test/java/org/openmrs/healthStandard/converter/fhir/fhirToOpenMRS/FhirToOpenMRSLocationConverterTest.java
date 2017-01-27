@@ -1,6 +1,5 @@
 package org.openmrs.healthStandard.converter.fhir.fhirToOpenMRS;
 
-import org.hamcrest.core.IsNull;
 import org.hl7.fhir.dstu3.model.Address;
 import org.hl7.fhir.dstu3.model.Location;
 import org.hl7.fhir.dstu3.model.Location.LocationStatus;
@@ -22,7 +21,11 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensitiveTest {
     static final String LOCATION_DATA_SET = "location-data-set.xml";
@@ -162,5 +165,20 @@ public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensiti
         LocationTag locationTag = tags.iterator().next();
         assertEquals("General Hospital", locationTag.getName());
         assertEquals("test desc", locationTag.getDescription());
+    }
+
+    @Test
+    public void shouldRetireTheLocationWhenFhirLocationIsInactivated() throws Exception {
+        FhirLocation fhirLocation = new FhirLocation();
+        fhirLocation.setId("f08ba64b-ea57-4a41-b33c-9dfc59b0c60a");
+        fhirLocation.setName("locationToRetire");
+        fhirLocation.setStatus(LocationStatus.INACTIVE);
+        String retireReason = "Useless Location";
+        fhirLocation.setInactivationReason(new StringType(retireReason));
+
+        org.openmrs.Location omrsLocation = converter.convert(fhirLocation);
+        assertTrue(omrsLocation.getRetired());
+        assertEquals(retireReason, omrsLocation.getRetireReason());
+
     }
 }

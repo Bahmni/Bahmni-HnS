@@ -74,6 +74,7 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocatio
             omrsLocation.setRetired(false);
         } else if (status.equalsIgnoreCase((Location.LocationStatus.INACTIVE.toString()))) {
             omrsLocation.setRetired(true);
+            omrsLocation.setRetireReason(fhirLocation.getInactivationReason().getValue());
         }
     }
 
