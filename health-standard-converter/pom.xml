@@ -185,4 +185,17 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>repo.mybahmni.org-release</id>
+            <name>Bahmni release repo</name>
+            <url>s3://repo.mybahmni.org/artifactory/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>repo.mybahmni.org</id>
+            <name>bahmni-artifactory-snapshots</name>
+            <url>s3://repo.mybahmni.org/artifactory/snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
