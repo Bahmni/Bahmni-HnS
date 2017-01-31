@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.bahmni.hns</groupId>
-        <artifactId>bahmni-resource-sync-client</artifactId>
+        <artifactId>bahmni-hub-connect</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bahmni-resource-sync-client-api</artifactId>
+    <artifactId>bahmni-hub-connect-api</artifactId>
     <build>
         <resources>
             <resource>

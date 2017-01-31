@@ -19,7 +19,7 @@
     <modules>
         <module>health-standard-converter</module>
         <module>openmrs-module-bdshrclient</module>
-        <module>bahmni-resource-sync-client</module>
+        <module>bahmni-hub-connect</module>
     </modules>
 
 </project>

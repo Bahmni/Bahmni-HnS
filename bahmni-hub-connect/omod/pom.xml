@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bahmni-resource-sync-client-omod</artifactId>
+    <artifactId>bahmni-hub-connect-omod</artifactId>
     <build>
         <finalName>${project.parent.artifactId}-${project.parent.version}</finalName>
         <plugins>
