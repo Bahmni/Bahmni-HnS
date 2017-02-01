@@ -1,7 +1,7 @@
-package org.bahmni.hns.task;
+package org.openmrs.module.bahmniHubConnect.task;
 
-import org.bahmni.hns.bahmniResourceSyncClient.BahmniResourceSyncProperties;
-import org.bahmni.hns.bahmniResourceSyncClient.client.AtomFeedClientFactory;
+import org.openmrs.module.bahmniHubConnect.BahmniResourceSyncProperties;
+import org.openmrs.module.bahmniHubConnect.client.AtomFeedClientFactory;
 import org.ict4h.atomfeed.client.service.FeedClient;
 import org.openmrs.scheduler.tasks.AbstractTask;
 

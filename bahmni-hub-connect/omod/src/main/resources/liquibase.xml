@@ -8,7 +8,7 @@
         <sql>
             INSERT INTO scheduler_task_config(name, schedulable_class, start_time, start_time_pattern, repeat_interval,
             start_on_startup, started, created_by, date_created, uuid)
-            VALUES ('Location Sync Task', 'org.bahmni.hns.task.LocationResourceSyncTask', now(), 'MM/dd/yyyy HH:mm:ss',
+            VALUES ('Location Sync Task', 'org.openmrs.module.bahmniHubConnect.task.LocationResourceSyncTask', now(), 'MM/dd/yyyy HH:mm:ss',
             10, 1, 0, 1, curdate(), uuid());
         </sql>
         
@@ -18,7 +18,7 @@
         <sql>
             INSERT INTO scheduler_task_config(name, schedulable_class, start_time, start_time_pattern, repeat_interval,
             start_on_startup, started, created_by, date_created, uuid)
-            VALUES ('Location Failed Events Sync Task', 'org.bahmni.hns.task.LocationResourceFailedEventsSyncTask', now(),
+            VALUES ('Location Failed Events Sync Task', 'org.openmrs.module.bahmniHubConnect.task.LocationResourceFailedEventsSyncTask', now(),
             'MM/dd/yyyy HH:mm:ss', 10, 1, 0, 1, curdate(), uuid());
         </sql>
 

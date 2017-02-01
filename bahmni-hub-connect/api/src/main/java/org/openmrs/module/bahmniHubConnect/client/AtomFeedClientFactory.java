@@ -1,6 +1,6 @@
-package org.bahmni.hns.bahmniResourceSyncClient.client;
+package org.openmrs.module.bahmniHubConnect.client;
 
-import org.bahmni.hns.bahmniResourceSyncClient.workers.EventWorkerFactory;
+import org.openmrs.module.bahmniHubConnect.workers.EventWorkerFactory;
 import org.ict4h.atomfeed.client.AtomFeedProperties;
 import org.ict4h.atomfeed.client.repository.AllFailedEvents;
 import org.ict4h.atomfeed.client.repository.AllFeeds;

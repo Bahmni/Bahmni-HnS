@@ -1,8 +1,8 @@
-package org.bahmni.hns.bahmniResourceSyncClient.workers;
+package org.openmrs.module.bahmniHubConnect.workers;
 
-import org.bahmni.hns.bahmniResourceSyncClient.client.FhirClient;
-import org.bahmni.hns.bahmniResourceSyncClient.client.FhirClientFactory;
-import org.bahmni.hns.bahmniResourceSyncClient.services.LocationService;
+import org.openmrs.module.bahmniHubConnect.client.FhirClient;
+import org.openmrs.module.bahmniHubConnect.client.FhirClientFactory;
+import org.openmrs.module.bahmniHubConnect.services.LocationService;
 import org.hl7.fhir.dstu3.model.Location;
 import org.ict4h.atomfeed.client.domain.Event;
 import org.junit.Before;

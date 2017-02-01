@@ -1,4 +1,4 @@
-package org.bahmni.hns.bahmniResourceSyncClient;
+package org.openmrs.module.bahmniHubConnect;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

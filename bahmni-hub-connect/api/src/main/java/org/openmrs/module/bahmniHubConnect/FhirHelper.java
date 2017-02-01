@@ -1,4 +1,4 @@
-package org.bahmni.hns.bahmniResourceSyncClient;
+package org.openmrs.module.bahmniHubConnect;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.IGenericClient;

@@ -1,7 +1,7 @@
-package org.bahmni.hns.bahmniResourceSyncClient.client;
+package org.openmrs.module.bahmniHubConnect.client;
 
 import ca.uhn.fhir.rest.client.IGenericClient;
-import org.bahmni.hns.bahmniResourceSyncClient.FhirHelper;
+import org.openmrs.module.bahmniHubConnect.FhirHelper;
 import org.hl7.fhir.dstu3.model.DomainResource;
 import org.hl7.fhir.dstu3.model.Location;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;

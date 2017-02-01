@@ -1,4 +1,4 @@
-package org.bahmni.hns.bahmniResourceSyncClient.workers;
+package org.openmrs.module.bahmniHubConnect.workers;
 
 import org.ict4h.atomfeed.client.domain.Event;
 import org.ict4h.atomfeed.client.service.EventWorker;

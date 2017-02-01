@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.openmrs.module</groupId>
     <artifactId>bahmni-hub-connect</artifactId>
     <packaging>pom</packaging>
     <modules>

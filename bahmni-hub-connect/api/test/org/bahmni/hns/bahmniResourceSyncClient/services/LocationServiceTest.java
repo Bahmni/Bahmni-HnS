@@ -1,4 +1,4 @@
-package org.bahmni.hns.bahmniResourceSyncClient.services;
+package org.openmrs.module.bahmniHubConnect.services;
 
 import org.hl7.fhir.dstu3.model.Location.LocationStatus;
 import org.junit.Before;
