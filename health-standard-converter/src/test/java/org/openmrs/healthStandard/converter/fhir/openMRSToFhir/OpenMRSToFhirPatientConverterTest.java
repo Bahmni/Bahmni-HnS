@@ -80,7 +80,7 @@ public class OpenMRSToFhirPatientConverterTest extends BaseModuleContextSensitiv
         assertEquals(omrsNames.size(),fhirPatientNames.size());
         Map<String, PersonName> personNameMap = omrsNames.stream().collect(Collectors.toMap(PersonName::getFamilyName, name -> name));
         for (HumanName fhirPatientName : fhirPatientNames) {
-            PersonName personName = personNameMap.get(fhirPatientName.getFamily());
+            PersonName personName = personNameMap.get(fhirPatientName.getFamily().get(0).getValue());
             assertNotNull(personName);
             String givenName = personName.getGivenName() + " " + personName.getMiddleName();
             assertEquals(givenName,fhirPatientName.getGiven().get(0).getValue());

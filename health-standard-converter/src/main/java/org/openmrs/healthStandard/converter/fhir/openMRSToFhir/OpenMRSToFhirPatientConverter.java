@@ -67,7 +67,7 @@ public class OpenMRSToFhirPatientConverter implements FHIRConverter<Patient, Fhi
         //todo:middel name mapping,are we using familyname2??
         List<HumanName> humanNames = omrsPatient.getNames().stream().map(name -> {
             HumanName fhirName = new HumanName();
-            fhirName.setFamily(name.getFamilyName());
+            fhirName.setFamily(Arrays.asList(new StringType(name.getFamilyName())));
             StringType givenName = new StringType(name.getGivenName() + " " + name.getMiddleName());
             fhirName.setGiven(Arrays.asList(givenName));
             StringType suffix = new StringType(name.getFamilyNameSuffix());

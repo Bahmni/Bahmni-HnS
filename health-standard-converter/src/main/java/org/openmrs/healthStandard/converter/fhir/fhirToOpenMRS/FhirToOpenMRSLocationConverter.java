@@ -10,6 +10,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.healthStandard.converter.exceptions.EntityNotFoundException;
 import org.openmrs.healthStandard.converter.fhir.FHIRConverter;
 import org.openmrs.healthStandard.converter.fhir.fhirModels.FhirLocation;
+import org.openmrs.healthStandard.converter.fhir.utils.FhirResourceValidator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,6 +26,8 @@ public class FhirToOpenMRSLocationConverter implements FHIRConverter<FhirLocatio
 
     @Override
     public org.openmrs.Location convert(FhirLocation fhirLocation) {
+        FhirResourceValidator.validateResource(fhirLocation);
+
         locationService = Context.getLocationService();
         org.openmrs.Location omrsLocation = getOpenMrsLocation(fhirLocation);
         omrsLocation.setName(fhirLocation.getName());

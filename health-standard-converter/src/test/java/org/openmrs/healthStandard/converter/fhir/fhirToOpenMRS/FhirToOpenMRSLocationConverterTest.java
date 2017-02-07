@@ -61,7 +61,6 @@ public class FhirToOpenMRSLocationConverterTest extends BaseModuleContextSensiti
         parent.setReference("Location/" + parentUuid);
         fhirLocation.setPartOf(parent);
 
-
         org.openmrs.Location location = converter.convert(fhirLocation);
 
         assertEquals(uuid, location.getUuid());
