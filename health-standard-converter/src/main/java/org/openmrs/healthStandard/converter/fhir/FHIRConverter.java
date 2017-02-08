@@ -1,8 +1,6 @@
 package org.openmrs.healthStandard.converter.fhir;
 
-import org.openmrs.healthStandard.converter.HealthStandardConverter;
-
-public interface FHIRConverter<S, T> extends HealthStandardConverter {
+public interface FHIRConverter<S, T> {
 
     T convert(S source);
 
