@@ -1,4 +1,4 @@
-package org.openmrs.healthStandard.converter.exceptions;
+package org.openmrs.healthStandard.validator.exceptions;
 
 public class FhirValidationException extends RuntimeException {
     public FhirValidationException(String message) {

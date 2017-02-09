@@ -62,7 +62,7 @@
         </testResources>
     </build>
     <properties>
-        <powerMock.version>1.6.6</powerMock.version>
+        <power-mock.version>1.6.6</power-mock.version>
     </properties>
     <dependencies>
         <dependency>
@@ -97,8 +97,14 @@
         <dependency>
             <groupId>org.openmrs.healthStandard</groupId>
             <artifactId>converter</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${health-standard-converter.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openmrs.healthStandard</groupId>
+            <artifactId>health-standard-validation</artifactId>
+            <version>${health-standard-validation.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -108,14 +114,13 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>${powerMock.version}</version>
+            <version>${power-mock.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>${powerMock.version}</version>
+            <version>${power-mock.version}</version>
         </dependency>
-
     </dependencies>
 </project>

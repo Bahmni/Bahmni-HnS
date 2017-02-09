@@ -26,9 +26,10 @@
         <module.name>${project.name}</module.name>
         <module.version>${project.version}</module.version>
         <module.package>${project.groupId}.${module.id}</module.package>
-        <hapiFhirBaseVersion>2.2</hapiFhirBaseVersion>
         <junit.version>4.12</junit.version>
         <jacoco.version>0.7.8</jacoco.version>
+        <health-standard-validation.version>1.0-SNAPSHOT</health-standard-validation.version>
+        <health-standard-converter.version>1.0-SNAPSHOT</health-standard-converter.version>
     </properties>
 
     <build>

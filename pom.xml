@@ -20,6 +20,7 @@
         <module>health-standard-converter</module>
         <module>openmrs-module-bdshrclient</module>
         <module>bahmni-hub-connect</module>
+        <module>health-standard-validation</module>
     </modules>
 
 </project>

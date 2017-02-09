@@ -1,4 +1,4 @@
-package org.openmrs.healthStandard.converter.fhir.utils;
+package org.openmrs.healthStandard.validator.fhir;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.hl7.fhir.dstu3.hapi.validation.FhirInstanceValidator;
 import org.hl7.fhir.dstu3.model.DomainResource;
 import org.hl7.fhir.dstu3.model.StructureDefinition;
-import org.openmrs.healthStandard.converter.exceptions.FhirValidationException;
+import org.openmrs.healthStandard.validator.exceptions.FhirValidationException;
 import org.openmrs.util.OpenmrsUtil;
 
 import java.io.File;
