@@ -55,6 +55,9 @@ public class OpenMRSToFhirLocationConverterTest extends BaseModuleContextSensiti
         assertEquals(StringUtils.defaultString(openMRSLocation.getAddress3(), ""), addressLines.get(2).getValueNotNull());
         assertEquals(StringUtils.defaultString(openMRSLocation.getAddress4(), ""), addressLines.get(3).getValueNotNull());
         assertEquals(StringUtils.defaultString(openMRSLocation.getAddress5(), ""), addressLines.get(4).getValueNotNull());
+        assertEquals(StringUtils.defaultString(openMRSLocation.getAddress6(), ""), addressLines.get(5).getValueNotNull());
+        assertEquals(StringUtils.defaultString(openMRSLocation.getAddress7(), ""), addressLines.get(6).getValueNotNull());
+        assertEquals(StringUtils.defaultString(openMRSLocation.getAddress15(), ""), addressLines.get(14).getValueNotNull());
         assertEquals(openMRSLocation.getLatitude(), fhirLocation.getPosition().getLatitude().toString());
         assertEquals(openMRSLocation.getLongitude(), fhirLocation.getPosition().getLongitude().toString());
         assertEquals(LocationStatus.ACTIVE, fhirLocation.getStatus());
