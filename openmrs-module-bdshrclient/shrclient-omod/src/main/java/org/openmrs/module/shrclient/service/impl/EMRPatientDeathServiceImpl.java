@@ -1,17 +1,15 @@
 package org.openmrs.module.shrclient.service.impl;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.Concept;
 import org.openmrs.Obs;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.ObsService;
 import org.openmrs.module.fhir.utils.GlobalPropertyLookUpService;
-import org.openmrs.module.shrclient.model.Patient;
-import org.openmrs.module.shrclient.model.Status;
 import org.openmrs.module.shrclient.service.EMRPatientDeathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ import static org.openmrs.module.fhir.MRSProperties.*;
 @Service
 public class EMRPatientDeathServiceImpl implements EMRPatientDeathService {
 
-    private static final Logger logger = Logger.getLogger(EMRPatientDeathServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(EMRPatientDeathServiceImpl.class);
 
     private ObsService obsService;
     private ConceptService conceptService;

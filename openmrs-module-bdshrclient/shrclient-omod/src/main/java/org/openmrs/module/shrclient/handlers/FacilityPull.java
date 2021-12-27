@@ -1,7 +1,8 @@
 package org.openmrs.module.shrclient.handlers;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.Location;
 import org.openmrs.LocationTag;
 import org.openmrs.api.LocationService;
@@ -25,7 +26,7 @@ import java.util.*;
 import static org.openmrs.module.shrclient.util.URLParser.parseURL;
 
 public class FacilityPull {
-    private final Logger logger = Logger.getLogger(FacilityPull.class);
+    private final Logger logger = LogManager.getLogger(FacilityPull.class);
 
     private static final int INITIAL_OFFSET = 0;
     private static final String OFFSET = "offset";
@@ -68,7 +69,7 @@ public class FacilityPull {
     public void synchronize() throws IOException {
         noOfEntriesSynchronizedSoFar = 0;
         List<FRLocationEntry> frLocationEntries = synchronizeUpdates();
-        logger.info(frLocationEntries.size() + " entries updated");
+        logger.info("{} entries updated", frLocationEntries.size());
     }
 
     private List<FRLocationEntry> synchronizeUpdates() throws IOException {
@@ -108,7 +109,7 @@ public class FacilityPull {
                 offset += lastRetrievedPartOfList.size();
                 noOfEntriesSynchronizedSoFar += lastRetrievedPartOfList.size();
             } else {
-                logger.info(synchronizedLocationEntries.size() + " entries synchronized");
+                logger.info("{} entries synchronized", synchronizedLocationEntries.size());
                 throw new RuntimeException("Failed to Synchronize updates from FR");
             }
         }
@@ -132,8 +133,8 @@ public class FacilityPull {
             }
         }
 
-        logger.info(synchronizedLocationEntries.size() + " entries synchronized");
-        logger.info(failedDuringSaveOrUpdateOperation.size() + " entries failed during synchronization");
+        logger.info("{} entries synchronized", synchronizedLocationEntries.size());
+        logger.info("{} entries failed during synchronization", failedDuringSaveOrUpdateOperation.size());
         logger.info("Synchronization Failed for the following Facilities");
         logger.info(failedDuringSaveOrUpdateOperation.toString());
 
@@ -151,7 +152,7 @@ public class FacilityPull {
     }
 
     private Location createNewLocation(FRLocationEntry frLocationEntry) {
-        logger.info("Creating new location: " + frLocationEntry.getName());
+        logger.info("Creating new location: {}", frLocationEntry.getName());
         Location location = null;
         try {
             location = locationMapper.create(frLocationEntry);
@@ -166,14 +167,14 @@ public class FacilityPull {
 
         } catch (Exception e) {
             logger.error("Error while creating a new Location : " + e);
-            logger.info("Logging the failed event : " + frLocationEntry.toString());
+            logger.info("Logging the failed event : {}", frLocationEntry.toString());
             failedDuringSaveOrUpdateOperation.add(frLocationEntry.toString());
         }
         return location;
     }
 
     private Location updateExistingLocation(FRLocationEntry frLocationEntry, IdMapping idMapping) {
-        logger.info("Updating existing location: " + frLocationEntry.getName());
+        logger.info("Updating existing location: {}", frLocationEntry.getName());
         Location location = null;
         try {
             location = locationMapper.updateExisting(
@@ -182,7 +183,7 @@ public class FacilityPull {
 
         } catch (Exception e) {
             logger.error("Error while updating an old Location : " + e);
-            logger.info("Logging the failed event : " + frLocationEntry.toString());
+            logger.info("Logging the failed event : {}", frLocationEntry.toString());
             failedDuringSaveOrUpdateOperation.add(frLocationEntry.toString());
         }
         return locationService.saveLocation(location);

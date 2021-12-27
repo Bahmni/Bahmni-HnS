@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.scheduler.tasks;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.client.service.EventWorker;
 import org.ict4h.atomfeed.client.service.FeedClient;
 import org.openmrs.api.context.Context;
@@ -22,7 +23,7 @@ import org.openmrs.scheduler.tasks.AbstractTask;
 import java.net.URISyntaxException;
 
 public abstract class AbstractBahmniSyncTask extends AbstractTask {
-    private static final Logger log = Logger.getLogger(AbstractBahmniSyncTask.class);
+    private static final Logger log = LogManager.getLogger(AbstractBahmniSyncTask.class);
     public static final String OPENMRS_PATIENT_FEED_URI = "openmrs://events/patient/recent";
     public static final String OPENMRS_ENCOUNTER_FEED_URI = "openmrs://events/OpenMRSEncounter/recent";
 

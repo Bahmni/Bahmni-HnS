@@ -2,7 +2,8 @@ package org.openmrs.module.shrclient.util;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 
 @Component
 public class ScheduledTaskHistory {
-    private final Logger logger = Logger.getLogger(ScheduledTaskHistory.class);
+    private final Logger logger = LogManager.getLogger(ScheduledTaskHistory.class);
 
     public static final String QUERY_FORMAT_TO_GET_FEED_URI_FOR_LAST_READ_ENTRY = "select feed_uri_for_last_read_entry from markers where feed_uri = '%s'";
     public static final String QUERY_FORMAT_TO_SET_FEED_URI_FOR_LAST_READ_ENTRY = "update markers set feed_uri_for_last_read_entry = '%s' where feed_uri = '%s'";

@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.service.impl;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.dao.FacilityCatchmentRepository;
 import org.openmrs.module.shrclient.model.FacilityCatchment;
 import org.openmrs.module.shrclient.service.FacilityCatchmentService;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 public class FacilityCatchmentServiceImpl implements FacilityCatchmentService {
-    private static final Logger logger = Logger.getLogger(FacilityCatchmentServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(FacilityCatchmentServiceImpl.class);
 
     private FacilityCatchmentRepository facilityCatchmentRepository;
 

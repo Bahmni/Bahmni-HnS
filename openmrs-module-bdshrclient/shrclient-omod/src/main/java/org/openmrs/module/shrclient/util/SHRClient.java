@@ -8,8 +8,8 @@ import com.sun.syndication.feed.atom.Feed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.WireFeedInput;
 import org.apache.http.entity.StringEntity;
-import org.apache.log4j.Logger;
-import org.openmrs.module.fhir.utils.DateUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
 import org.openmrs.module.shrclient.web.controller.dto.EncounterEvent;
 
@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class SHRClient {
 
-    private static final Logger log = Logger.getLogger(RestClient.class);
+    private static final Logger log = LogManager.getLogger(RestClient.class);
 
     private String baseUrl;
     private Map<String, String> headers;

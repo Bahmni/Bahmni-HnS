@@ -1,7 +1,8 @@
 package org.openmrs.module.shrclient.web.controller;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.module.shrclient.service.FacilityCatchmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value = "/facilityCatchments")
 public class FacilityCatchmentController {
-    private static final Logger log = Logger.getLogger(FacilityCatchmentController.class);
+    private static final Logger log = LogManager.getLogger(FacilityCatchmentController.class);
 
     @Autowired
     private FacilityCatchmentService facilityCatchmentService;

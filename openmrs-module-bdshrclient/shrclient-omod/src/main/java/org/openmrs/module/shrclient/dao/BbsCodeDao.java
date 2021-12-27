@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.apache.commons.collections4.bidimap.UnmodifiableBidiMap;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class BbsCodeDao {
 
-    private static final Logger log = Logger.getLogger(BbsCodeDao.class);
+    private static final Logger log = LogManager.getLogger(BbsCodeDao.class);
 
     private static final BbsCodeDao dao = new BbsCodeDao();
 

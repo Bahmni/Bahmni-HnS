@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.model.FacilityCatchment;
 import org.openmrs.module.shrclient.model.IdMapping;
 import org.openmrs.module.shrclient.util.Database;
@@ -20,7 +21,7 @@ import java.util.Set;
 @Component("bdShrClientFacilityCatchmentRepository")
 public class FacilityCatchmentRepository {
 
-    private Logger logger = Logger.getLogger(FacilityCatchmentRepository.class);
+    private Logger logger = LogManager.getLogger(FacilityCatchmentRepository.class);
 
     @Autowired
     private Database database;

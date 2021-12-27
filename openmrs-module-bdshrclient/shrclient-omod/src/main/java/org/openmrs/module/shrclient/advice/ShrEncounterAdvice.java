@@ -2,7 +2,8 @@ package org.openmrs.module.shrclient.advice;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.server.repository.jdbc.AllEventRecordsQueueJdbcImpl;
 import org.ict4h.atomfeed.server.service.Event;
 import org.ict4h.atomfeed.server.service.EventService;
@@ -31,7 +32,7 @@ public class ShrEncounterAdvice implements AfterReturningAdvice {
     private final EventService eventService;
     private AtomFeedSpringTransactionManager atomFeedSpringTransactionManager;
     private EncounterAdviceState encounterAdviceState;
-    private static final Logger logger = Logger.getLogger(ShrEncounterAdvice.class);
+    private static final Logger logger = LogManager.getLogger(ShrEncounterAdvice.class);
     private OMRSLocationService locationService;
 
     public ShrEncounterAdvice() {

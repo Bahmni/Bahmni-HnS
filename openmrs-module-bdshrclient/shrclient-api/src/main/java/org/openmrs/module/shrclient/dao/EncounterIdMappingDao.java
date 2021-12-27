@@ -1,7 +1,6 @@
 package org.openmrs.module.shrclient.dao;
 
-import org.apache.log4j.Logger;
-import org.openmrs.module.fhir.utils.DateUtil;
+import org.apache.logging.log4j.LogManager;
 import org.openmrs.module.shrclient.DatabaseConstants;
 import org.openmrs.module.shrclient.model.EncounterIdMapping;
 import org.openmrs.module.shrclient.model.IdMapping;
@@ -22,7 +21,7 @@ public class EncounterIdMappingDao extends IdMappingDao {
 
     @Autowired
     public EncounterIdMappingDao(Database database) {
-        super(database, Logger.getLogger(EncounterIdMappingDao.class));
+        super(database, LogManager.getLogger(EncounterIdMappingDao.class));
     }
 
     @Override

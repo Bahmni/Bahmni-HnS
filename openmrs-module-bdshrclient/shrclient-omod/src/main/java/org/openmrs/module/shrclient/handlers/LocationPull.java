@@ -1,7 +1,8 @@
 package org.openmrs.module.shrclient.handlers;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.addresshierarchy.AddressHierarchyEntry;
 import org.openmrs.module.addresshierarchy.service.AddressHierarchyService;
 import org.openmrs.module.fhir.utils.DateUtil;
@@ -20,7 +21,7 @@ import static org.openmrs.module.shrclient.util.URLParser.parseURL;
 
 //purpose: this class represents a location repository and provides synchronization to local OpenMRS server
 public class LocationPull {
-    private final Logger logger = Logger.getLogger(LocationPull.class);
+    private final Logger logger = LogManager.getLogger(LocationPull.class);
 
     public static final String LR_DIVISIONS_LEVEL_FEED_URI = "urn://lr/divisions";
     public static final String LR_DISTRICTS_LEVEL_FEED_URI = "urn://lr/districts";
@@ -67,22 +68,22 @@ public class LocationPull {
         noOfEntriesSynchronizedSoFar = 0;
 
         List<LRAddressHierarchyEntry> synchronizedAddressHierarchyEntriesForDivisions = synchronizeUpdatesByLevel(LR_DIVISIONS_PATH_INFO, LR_DIVISIONS_LEVEL_FEED_URI);
-        logger.info(synchronizedAddressHierarchyEntriesForDivisions.size() + " entries updated");
+        logger.info("{} entries updated", synchronizedAddressHierarchyEntriesForDivisions.size());
 
         List<LRAddressHierarchyEntry> synchronizedAddressHierarchyEntriesForDistricts = synchronizeUpdatesByLevel(LR_DISTRICTS_PATH_INFO, LR_DISTRICTS_LEVEL_FEED_URI);
-        logger.info(synchronizedAddressHierarchyEntriesForDistricts.size() + " entries updated");
+        logger.info("{} entries updated", synchronizedAddressHierarchyEntriesForDistricts.size());
 
         List<LRAddressHierarchyEntry> synchronizedAddressHierarchyEntriesForUpazilas = synchronizeUpdatesByLevel(LR_UPAZILAS_PATH_INFO, LR_UPAZILAS_LEVEL_FEED_URI);
-        logger.info(synchronizedAddressHierarchyEntriesForUpazilas.size() + " entries updated");
+        logger.info("{} entries updated", synchronizedAddressHierarchyEntriesForUpazilas.size());
 
         List<LRAddressHierarchyEntry> synchronizedAddressHierarchyEntriesForPaurasavas = synchronizeUpdatesByLevel(LR_PAURASAVAS_PATH_INFO, LR_PAURASAVAS_LEVEL_FEED_URI);
-        logger.info(synchronizedAddressHierarchyEntriesForPaurasavas.size() + " entries updated");
+        logger.info("{} entries updated", synchronizedAddressHierarchyEntriesForPaurasavas.size());
 
         List<LRAddressHierarchyEntry> synchronizedAddressHierarchyEntriesForUnions = synchronizeUpdatesByLevel(LR_UNIONS_PATH_INFO, LR_UNIONS_LEVEL_FEED_URI);
-        logger.info(synchronizedAddressHierarchyEntriesForUnions.size() + " entries updated");
+        logger.info("{} entries updated", synchronizedAddressHierarchyEntriesForUnions.size());
 
         List<LRAddressHierarchyEntry> synchronizedAddressHierarchyEntriesForWards = synchronizeUpdatesByLevel(LR_WARDS_PATH_INFO, LR_WARDS_LEVEL_FEED_URI);
-        logger.info(synchronizedAddressHierarchyEntriesForWards.size() + " entries updated");
+        logger.info("{} entries updated", synchronizedAddressHierarchyEntriesForWards.size());
     }
 
     private List<LRAddressHierarchyEntry> synchronizeUpdatesByLevel(String levelName, String feedUri) throws IOException {
@@ -123,7 +124,7 @@ public class LocationPull {
                 offset += lastRetrievedPartOfList.size();
                 noOfEntriesSynchronizedSoFar += lastRetrievedPartOfList.size();
             } else {
-                logger.info(synchronizedAddressHierarchyEntries.size() + " entries synchronized");
+                logger.info("{} entries synchronized", synchronizedAddressHierarchyEntries.size());
                 throw new RuntimeException("Failed to Synchronize updates from LR");
             }
         }
@@ -147,8 +148,8 @@ public class LocationPull {
             }
         }
 
-        logger.info(synchronizedAddressHierarchyEntries.size() + " entries synchronized");
-        logger.info(failedDuringSaveOrUpdateOperation.size() + " entries failed during synchronization");
+        logger.info("{} entries synchronized", synchronizedAddressHierarchyEntries.size());
+        logger.info("{} entries failed during synchronization", failedDuringSaveOrUpdateOperation.size());
         logger.info("Synchronization Failed for the following Facilities");
         logger.info(failedDuringSaveOrUpdateOperation.toString());
 
@@ -160,7 +161,7 @@ public class LocationPull {
         try {
             downloadedData = Arrays.asList(lrWebClient.get(completeContextPath, LRAddressHierarchyEntry[].class));
         } catch (Exception e) {
-            logger.error("Error while downloading chunk of Updates from LR : " + e);
+            logger.error("Error while downloading chunk of Updates from LR : ", e);
         }
         return downloadedData;
     }
@@ -179,13 +180,13 @@ public class LocationPull {
             addressHierarchyEntry = addressHierarchyEntryMapper.map(addressHierarchyEntry, lrAddressHierarchyEntry, addressHierarchyService);
             try {
                 if (addressHierarchyEntry.getId() == null) {
-                    logger.info("Saving Address Hierarchy Entry to Local DB : \n" + addressHierarchyEntry.toString());
+                    logger.info("Saving Address Hierarchy Entry to Local DB : \n {}",  addressHierarchyEntry.toString());
                 } else {
-                    logger.info("Updating Address Hierarchy Entry to Local Db : " + addressHierarchyEntry.toString());
+                    logger.info("Updating Address Hierarchy Entry to Local Db : {}", addressHierarchyEntry.toString());
                 }
                 addressHierarchyService.saveAddressHierarchyEntry(addressHierarchyEntry);
             } catch (Exception e) {
-                logger.error("Error during Save Or Update to Local Db : " + e.toString());
+                logger.error("Error during Save Or Update to Local Db : {}", e.toString());
                 failedDuringSaveOrUpdateOperation.add(lrAddressHierarchyEntry.toString());
             }
         }

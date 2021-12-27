@@ -11,7 +11,8 @@ import ca.uhn.fhir.model.primitive.DateTimeDt;
 import ca.uhn.fhir.model.primitive.StringDt;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.*;
 import org.openmrs.api.ConceptService;
@@ -63,7 +64,7 @@ public class FHIRMedicationOrderMapper implements FHIRResourceMapper {
     @Autowired
     private IdMappingRepository idMappingRepository;
 
-    private static final Logger logger = Logger.getLogger(FHIRMedicationOrderMapper.class);
+    private static final Logger logger = LogManager.getLogger(FHIRMedicationOrderMapper.class);
 
     public FHIRMedicationOrderMapper() {
         objectMapper = new ObjectMapper();

@@ -11,9 +11,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.client.repository.AllFeeds;
 import org.openmrs.module.shrclient.handlers.ClientRegistry;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
@@ -27,7 +27,7 @@ import java.util.Map;
 public class ShrEncounterFeeds extends AllFeeds {
     private Map<String, String> feedHeaders;
     private ClientRegistry clientRegistry;
-    private static final Logger logger = Logger.getLogger(ShrEncounterFeeds.class);
+    private static final Logger logger = LogManager.getLogger(ShrEncounterFeeds.class);
 
     public ShrEncounterFeeds(Map<String, String> feedHeaders, ClientRegistry clientRegistry) {
         this.feedHeaders = feedHeaders;

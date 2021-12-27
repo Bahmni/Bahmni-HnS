@@ -1,6 +1,6 @@
 package org.openmrs.module.shrclient.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.openmrs.module.shrclient.DatabaseConstants;
 import org.openmrs.module.shrclient.model.IdMapping;
 import org.openmrs.module.shrclient.model.OrderIdMapping;
@@ -20,7 +20,7 @@ import static org.openmrs.module.fhir.utils.DateUtil.getDateFromTimestamp;
 public class OrderIdMappingDao extends IdMappingDao {
     @Autowired
     public OrderIdMappingDao(Database database) {
-        super(database, Logger.getLogger(OrderIdMappingDao.class));
+        super(database, LogManager.getLogger(OrderIdMappingDao.class));
     }
 
     @Override

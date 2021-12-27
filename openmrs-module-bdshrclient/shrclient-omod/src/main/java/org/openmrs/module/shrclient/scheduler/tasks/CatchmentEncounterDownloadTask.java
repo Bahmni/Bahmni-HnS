@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.scheduler.tasks;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.handlers.EncounterPull;
 import org.openmrs.module.shrclient.identity.IdentityStore;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
@@ -9,7 +10,7 @@ import org.openmrs.module.shrclient.util.PropertiesReader;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
 public class CatchmentEncounterDownloadTask extends AbstractTask {
-    private static final Logger log = Logger.getLogger(CatchmentEncounterDownloadTask.class);
+    private static final Logger log = LogManager.getLogger(CatchmentEncounterDownloadTask.class);
 
     @Override
     public void execute() {

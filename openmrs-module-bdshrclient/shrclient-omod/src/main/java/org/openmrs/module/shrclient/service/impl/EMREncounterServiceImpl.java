@@ -5,7 +5,8 @@ import ca.uhn.fhir.model.dstu2.resource.Bundle;
 import ca.uhn.fhir.model.dstu2.resource.Composition;
 import com.sun.syndication.feed.atom.Category;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.*;
 import org.openmrs.api.OrderService;
 import org.openmrs.api.VisitService;
@@ -35,7 +36,7 @@ import static org.openmrs.module.fhir.mapper.model.Confidentiality.getConfidenti
 @Service("hieEmrEncounterService")
 public class EMREncounterServiceImpl implements EMREncounterService {
 
-    private static final Logger logger = Logger.getLogger(EMREncounterServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(EMREncounterServiceImpl.class);
     private EMRPatientService emrPatientService;
     private IdMappingRepository idMappingRepository;
     private PropertiesReader propertiesReader;

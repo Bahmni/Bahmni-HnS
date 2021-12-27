@@ -1,7 +1,6 @@
 package org.openmrs.module.shrclient.dao;
 
-import org.apache.log4j.Logger;
-import org.openmrs.module.fhir.utils.DateUtil;
+import org.apache.logging.log4j.LogManager;
 import org.openmrs.module.shrclient.DatabaseConstants;
 import org.openmrs.module.shrclient.model.DiagnosisIdMapping;
 import org.openmrs.module.shrclient.model.IdMapping;
@@ -13,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import static org.openmrs.module.fhir.utils.DateUtil.getDateFromTimestamp;
@@ -22,7 +20,7 @@ import static org.openmrs.module.fhir.utils.DateUtil.getDateFromTimestamp;
 public class DiagnosisIdMappingDao extends IdMappingDao {
     @Autowired
     public DiagnosisIdMappingDao(Database database) {
-        super(database, Logger.getLogger(DiagnosisIdMappingDao.class));
+        super(database, LogManager.getLogger(DiagnosisIdMappingDao.class));
     }
 
     @Override

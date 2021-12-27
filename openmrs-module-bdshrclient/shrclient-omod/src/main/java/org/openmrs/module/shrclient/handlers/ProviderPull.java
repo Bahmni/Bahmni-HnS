@@ -1,6 +1,8 @@
 package org.openmrs.module.shrclient.handlers;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.fhir.utils.DateUtil;
 import org.openmrs.module.shrclient.mapper.ProviderMapper;
 import org.openmrs.module.shrclient.model.ProviderEntry;
@@ -33,7 +35,7 @@ public class ProviderPull {
     private ScheduledTaskHistory scheduledTaskHistory;
     private ProviderMapper providerMapper;
 
-    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ProviderPull.class);
+    private final Logger logger = LogManager.getLogger(ProviderPull.class);
 
     public ProviderPull(PropertiesReader propertiesReader,
                         RestClient prClient,
@@ -88,7 +90,7 @@ public class ProviderPull {
 
         updateMarkers(noOfEntriesSynchronizedSoFar, offset, newEntriesFromPr, baseContextPath, updatedSince);
 
-        logger.info(noOfEntriesSynchronizedSoFar + " entries synchronized");
+        logger.info("{} entries synchronized", noOfEntriesSynchronizedSoFar);
     }
 
     private void updateMarkers(int noOfEntriesSynchronizedSoFar, int offset, List<ProviderEntry> newEntriesFromPr, String baseContextPath, String updatedSince) {

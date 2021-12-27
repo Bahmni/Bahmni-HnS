@@ -12,7 +12,8 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
 import org.springframework.http.HttpStatus;
 
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class WebClient {
 
-    private static final Logger log = Logger.getLogger(WebClient.class);
+    private static final Logger log = LogManager.getLogger(WebClient.class);
     public static final String ZERO_WIDTH_NO_BREAK_SPACE = "\uFEFF";
     public static final String BLANK_CHARACTER = "";
     private String baseUrl;

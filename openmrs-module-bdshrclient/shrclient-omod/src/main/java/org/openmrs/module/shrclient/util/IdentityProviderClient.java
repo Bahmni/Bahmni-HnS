@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class IdentityProviderClient {
-    private static final Logger log = Logger.getLogger(IdentityProviderClient.class);
+    private static final Logger log = LogManager.getLogger(IdentityProviderClient.class);
     private final WebClient webClient;
 
     public IdentityProviderClient(String baseUrl, Map<String, String> headers) {

@@ -1,6 +1,6 @@
 package org.openmrs.module.shrclient.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.openmrs.module.shrclient.DatabaseConstants;
 import org.openmrs.module.shrclient.model.IdMapping;
 import org.openmrs.module.shrclient.model.PatientIdMapping;
@@ -21,7 +21,7 @@ public class PatientIdMappingDao extends IdMappingDao {
 
     @Autowired
     public PatientIdMappingDao(Database database) {
-        super(database, Logger.getLogger(PatientIdMappingDao.class));
+        super(database, LogManager.getLogger(PatientIdMappingDao.class));
     }
 
     @Override
