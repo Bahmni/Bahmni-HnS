@@ -158,7 +158,7 @@ public class EMRPatientServiceImpl implements EMRPatientService {
         if (educationConceptId != null) {
             addPersonAttribute(emrPatient, EDUCATION_ATTRIBUTE, educationConceptId);
         } else {
-            logger.warn(String.format("Can't update education for patient. " +
+            logger.warn(String.format("Can't update education for patient. ",
                             "Can't identify relevant concept for patient hid:%s, education:%s, code:%s",
                     mciPatient.getHealthId(), educationConceptName, educationLevel));
         }
@@ -178,7 +178,7 @@ public class EMRPatientServiceImpl implements EMRPatientService {
         if (occupationConceptId != null) {
             addPersonAttribute(emrPatient, OCCUPATION_ATTRIBUTE, occupationConceptId);
         } else {
-            logger.warn(String.format("Can't update occupation for patient. " +
+            logger.warn(String.format("Can't update occupation for patient. ",
                             "Can't identify relevant concept for patient hid:%s, occupation:%s, code:%s",
                     mciPatient.getHealthId(), occupationConceptName, occupation));
         }

@@ -135,7 +135,7 @@ public class ProviderPull {
                 downloadedData = Arrays.asList(providerEntries);
             }
         } catch (Exception e) {
-            logger.error("Error while downloading updates from PR : " + e);
+            logger.error("Error while downloading updates from PR : ", e);
         }
         return downloadedData;
     }

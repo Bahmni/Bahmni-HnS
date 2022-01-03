@@ -44,7 +44,7 @@
         <atomfeed.version>1.9.2</atomfeed.version>
         <jackson.version>2.3.3</jackson.version>
         <httpclient.version>4.3.3</httpclient.version>
-        <log4j.version>2.17.0</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <idGenVersion>2.6</idGenVersion>
     </properties>
 
@@ -269,7 +269,7 @@
         <repository>
             <id>openmrs-repo</id>
             <name>OpenMRS Nexus Repository</name>
-            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
         </repository>
         <repository>
             <id>sonatype-nexus-repo-release</id>
@@ -289,7 +289,7 @@
         <pluginRepository>
             <id>openmrs-repo</id>
             <name>OpenMRS Nexus Repository</name>
-            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>

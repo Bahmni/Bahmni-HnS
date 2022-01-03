@@ -24,13 +24,13 @@ public class FacilityCatchmentServiceImpl implements FacilityCatchmentService {
 
     @Override
     public List<FacilityCatchment> getCatchmentsForFacility(int locationId) {
-        logger.debug("Finding catchments for facility with location_id: " + locationId);
+        logger.debug("Finding catchments for facility with location_id: {}", locationId);
         return facilityCatchmentRepository.findByFacilityLocationId(locationId);
     }
 
     @Override
     public List<FacilityCatchment> getFacilitiesForCatchment(String catchment) {
-        logger.debug("Finding facilities for catchment :  " + catchment);
+        logger.debug("Finding facilities for catchment : {}", catchment);
         return facilityCatchmentRepository.findByCatchment(catchment);
     }
 }

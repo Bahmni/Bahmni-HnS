@@ -89,7 +89,7 @@ public class EncounterMapper {
         try {
             return EncounterClassEnum.forCode(visitType);
         } catch (Exception e) {
-            logger.warn("Could not identify FHIR Encounter.class for MRS visitType:" + visitType);
+            logger.warn("Could not identify FHIR Encounter.class for MRS visitType: {}", visitType);
         }
         return null;
     }
