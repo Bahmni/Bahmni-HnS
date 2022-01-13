@@ -60,7 +60,7 @@ public class ShrEncounterAdvice implements AfterReturningAdvice {
         final boolean alreadyRaisedEvent = encounterAdviceState.hasAlreadyProcessedEncounter((String) encounterUuid);
         if (alreadyRaisedEvent) {
             //we have already raised an event
-            logger.warn("Not creating an Event since it is deduced that its already raised for Encounter:" + encounterUuid);
+            logger.warn("Not creating an Event since it is deduced that its already raised for Encounter: {}", encounterUuid);
             return;
         }
 

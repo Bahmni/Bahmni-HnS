@@ -146,7 +146,7 @@ public class FacilityPull {
         try {
             downloadedData = Arrays.asList(frWebClient.get(completeContextPath, FRLocationEntry[].class));
         } catch (Exception e) {
-            logger.error("Error while downloading chunk of Updates from FR : {}", e);
+            logger.error("Error while downloading chunk of Updates from FR : ", e);
         }
         return downloadedData;
     }
@@ -166,7 +166,7 @@ public class FacilityPull {
                     IdMappingType.FACILITY, locationUrl, new Date()));
 
         } catch (Exception e) {
-            logger.error("Error while creating a new Location : {}", e);
+            logger.error("Error while creating a new Location : ", e);
             logger.info("Logging the failed event : {}", frLocationEntry.toString());
             failedDuringSaveOrUpdateOperation.add(frLocationEntry.toString());
         }
@@ -182,7 +182,7 @@ public class FacilityPull {
             facilityCatchmentRepository.saveMappings(location.getLocationId(), frLocationEntry.getProperties().getCatchments());
 
         } catch (Exception e) {
-            logger.error("Error while updating an old Location : {}", e);
+            logger.error("Error while updating an old Location : ", e);
             logger.info("Logging the failed event : {}", frLocationEntry.toString());
             failedDuringSaveOrUpdateOperation.add(frLocationEntry.toString());
         }
