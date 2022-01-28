@@ -2,7 +2,8 @@ package org.openmrs.module.shrclient.handlers;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.client.domain.Event;
 import org.ict4h.atomfeed.client.service.EventWorker;
 import org.openmrs.*;
@@ -31,7 +32,7 @@ import static org.openmrs.module.fhir.OpenMRSConstants.HEALTH_ID_IDENTIFIER_TYPE
 
 public class PatientPush implements EventWorker {
 
-    private static final Logger log = Logger.getLogger(PatientPush.class);
+    private static final Logger log = LogManager.getLogger(PatientPush.class);
     private final ClientRegistry clientRegistry;
 
     private PatientService patientService;

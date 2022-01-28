@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.feeds.shr;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.client.exceptions.AtomFeedClientException;
 import org.openmrs.module.shrclient.handlers.ClientRegistry;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
@@ -18,7 +19,7 @@ public class DefaultEncounterFeedWorker implements EncounterEventWorker {
     private ClientRegistry clientRegistry;
     private EMREncounterService emrEncounterService;
 
-    private final Logger logger = Logger.getLogger(DefaultEncounterFeedWorker.class);
+    private final Logger logger = LogManager.getLogger(DefaultEncounterFeedWorker.class);
 
     public DefaultEncounterFeedWorker(EMRPatientService emrPatientService, EMREncounterService emrEncounterService, PropertiesReader propertiesReader,
                                       ClientRegistry clientRegistry) {
@@ -30,7 +31,7 @@ public class DefaultEncounterFeedWorker implements EncounterEventWorker {
 
     @Override
     public void process(EncounterEvent encounterEvent) {
-        logger.info("Processing bundle with encounter id: " + encounterEvent.getEncounterId());
+        logger.info("Processing bundle with encounter id: {}", encounterEvent.getEncounterId());
         String healthId = encounterEvent.getHealthId();
         try {
             Patient patient = downloadActivePatient(healthId);

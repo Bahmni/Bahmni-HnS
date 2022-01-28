@@ -20,7 +20,7 @@
     <properties>
         <atomfeed.version>1.9.4</atomfeed.version>
         <openmrs.version>2.0.2</openmrs.version>
-        <openmrs-atomfeed-common.version>2.5.5-SNAPSHOT</openmrs-atomfeed-common.version>
+        <openmrs-atomfeed-common.version>2.5.6</openmrs-atomfeed-common.version>
         <openmrs.runtime.version>2.0.2</openmrs.runtime.version>
         <module.id>${project.artifactId}</module.id>
         <module.name>${project.name}</module.name>
@@ -153,7 +153,7 @@
         <pluginRepository>
             <id>openmrs-repo</id>
             <name>OpenMRS Nexus Repository</name>
-            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -164,7 +164,7 @@
         <repository>
             <id>openmrs-repo</id>
             <name>OpenMRS Nexus Repository</name>
-            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+            <url>https://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
         </repository>
         <repository>
             <id>sonatype-nexus-repo-release</id>

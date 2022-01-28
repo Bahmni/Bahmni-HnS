@@ -1,7 +1,8 @@
 package org.openmrs.module.shrclient.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.LocationService;
@@ -44,7 +45,7 @@ import static org.openmrs.module.fhir.utils.MCIConstants.HID_CARD_STATUS_REGISTE
 
 @Service("hieEmrPatientService")
 public class EMRPatientServiceImpl implements EMRPatientService {
-    private static final Logger logger = Logger.getLogger(EMRPatientServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(EMRPatientServiceImpl.class);
     public static final String REGEX_TO_MATCH_MULTIPLE_WHITE_SPACE = "\\s+";
 
     private BbsCodeService bbsCodeService;
@@ -157,7 +158,7 @@ public class EMRPatientServiceImpl implements EMRPatientService {
         if (educationConceptId != null) {
             addPersonAttribute(emrPatient, EDUCATION_ATTRIBUTE, educationConceptId);
         } else {
-            logger.warn(String.format("Can't update education for patient. " +
+            logger.warn(String.format("Can't update education for patient. ",
                             "Can't identify relevant concept for patient hid:%s, education:%s, code:%s",
                     mciPatient.getHealthId(), educationConceptName, educationLevel));
         }
@@ -177,7 +178,7 @@ public class EMRPatientServiceImpl implements EMRPatientService {
         if (occupationConceptId != null) {
             addPersonAttribute(emrPatient, OCCUPATION_ATTRIBUTE, occupationConceptId);
         } else {
-            logger.warn(String.format("Can't update occupation for patient. " +
+            logger.warn(String.format("Can't update occupation for patient. ",
                             "Can't identify relevant concept for patient hid:%s, occupation:%s, code:%s",
                     mciPatient.getHealthId(), occupationConceptName, occupation));
         }
@@ -187,7 +188,7 @@ public class EMRPatientServiceImpl implements EMRPatientService {
     public org.openmrs.Patient getEMRPatientByHealthId(String healthId) {
         PatientIdMapping patientIdMapping = (PatientIdMapping) idMappingsRepository.findByExternalId(healthId, IdMappingType.PATIENT);
         if (patientIdMapping == null) return null;
-        logger.info("Patient with HealthId " + healthId + " already exists. Using reference to the patient for downloaded encounters.");
+        logger.info("Patient with HealthId:{} already exists. Using reference to the patient for downloaded encounters.", healthId);
         return patientService.getPatientByUuid(patientIdMapping.getInternalId());
     }
 

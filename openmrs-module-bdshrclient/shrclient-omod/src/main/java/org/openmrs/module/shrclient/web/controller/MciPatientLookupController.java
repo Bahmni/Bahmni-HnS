@@ -1,7 +1,8 @@
 package org.openmrs.module.shrclient.web.controller;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.module.shrclient.service.MCIPatientLookupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value = "/mci")
 public class MciPatientLookupController {
-    private static final Logger log = Logger.getLogger(MciPatientLookupController.class);
+    private static final Logger log = LogManager.getLogger(MciPatientLookupController.class);
 
     @Autowired
     private MCIPatientLookupService mciPatientLookupService;

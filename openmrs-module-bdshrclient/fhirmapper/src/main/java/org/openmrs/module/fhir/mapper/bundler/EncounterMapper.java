@@ -8,7 +8,8 @@ import ca.uhn.fhir.model.dstu2.composite.ResourceReferenceDt;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.valueset.EncounterClassEnum;
 import ca.uhn.fhir.model.dstu2.valueset.EncounterStateEnum;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.*;
 import org.openmrs.module.fhir.mapper.model.EntityReference;
 import org.openmrs.module.fhir.mapper.model.FHIREncounter;
@@ -29,7 +30,7 @@ public class EncounterMapper {
     @Autowired
     private ProviderLookupService providerLookupService;
 
-    private Logger logger = Logger.getLogger(EncounterMapper.class);
+    private Logger logger = LogManager.getLogger(EncounterMapper.class);
 
     public FHIREncounter map(org.openmrs.Encounter openMrsEncounter, String healthId, SystemProperties systemProperties) {
         Encounter encounter = new Encounter();
@@ -88,7 +89,7 @@ public class EncounterMapper {
         try {
             return EncounterClassEnum.forCode(visitType);
         } catch (Exception e) {
-            logger.warn("Could not identify FHIR Encounter.class for MRS visitType:" + visitType);
+            logger.warn("Could not identify FHIR Encounter.class for MRS visitType: {}", visitType);
         }
         return null;
     }

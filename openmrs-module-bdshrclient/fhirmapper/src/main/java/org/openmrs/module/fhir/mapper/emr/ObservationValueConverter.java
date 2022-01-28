@@ -3,7 +3,8 @@ package org.openmrs.module.fhir.mapper.emr;
 import ca.uhn.fhir.model.dstu2.composite.*;
 import ca.uhn.fhir.model.primitive.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.fhir.utils.DateUtil;
 
 import java.math.BigDecimal;
@@ -22,7 +23,7 @@ public class ObservationValueConverter {
     public static final String INVALID_REFERENCE = "invalid reference";
 
 
-    private static Logger logger = Logger.getLogger(ObservationValueConverter.class);
+    private static Logger logger = LogManager.getLogger(ObservationValueConverter.class);
 
     public static String convertToText(Object typeValue) {
         try {

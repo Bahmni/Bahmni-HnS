@@ -3,7 +3,8 @@ package org.openmrs.module.shrclient.handlers;
 import ca.uhn.fhir.model.dstu2.resource.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.client.domain.Event;
 import org.ict4h.atomfeed.client.exceptions.AtomFeedClientException;
 import org.ict4h.atomfeed.client.service.EventWorker;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 
 public class EncounterPush implements EventWorker {
 
-    private static final Logger log = Logger.getLogger(EncounterPush.class);
+    private static final Logger log = LogManager.getLogger(EncounterPush.class);
     private IdMappingRepository idMappingsRepository;
     private CompositionBundleCreator compositionBundleCreator;
     private EncounterService encounterService;

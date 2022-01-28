@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.identity.IdentityUnauthorizedException;
 import org.openmrs.module.shrclient.model.Patient;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 
 public class RestClient {
 
-    private static final Logger log = Logger.getLogger(RestClient.class);
+    private static final Logger log = LogManager.getLogger(RestClient.class);
     private final ObjectMapper mapper;
     private final WebClient webClient;
 

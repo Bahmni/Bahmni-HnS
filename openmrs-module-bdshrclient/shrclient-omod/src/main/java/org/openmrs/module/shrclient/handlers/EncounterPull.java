@@ -1,7 +1,8 @@
 package org.openmrs.module.shrclient.handlers;
 
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.fhir.utils.PropertyKeyConstants;
 import org.openmrs.module.shrclient.feeds.shr.DefaultEncounterFeedWorker;
 import org.openmrs.module.shrclient.feeds.shr.ShrEncounterFeedProcessor;
@@ -27,7 +28,7 @@ import static org.springframework.http.MediaType.APPLICATION_ATOM_XML;
 public class EncounterPull {
     private final static String FACILITY_ID_HEADER_KEY = "facilityId";
 
-    private final Logger logger = Logger.getLogger(EncounterPull.class);
+    private final Logger logger = LogManager.getLogger(EncounterPull.class);
     private PropertiesReader propertiesReader;
     private IdentityStore identityStore;
     private ClientRegistry clientRegistry;
@@ -77,7 +78,7 @@ public class EncounterPull {
 
     private String getFacilityId(Properties facilityInstanceProperties) {
         Object facilityId = facilityInstanceProperties.getProperty(FACILITY_ID);
-        logger.info("Identified Facility:" + facilityId);
+        logger.info("Identified Facility: {}", facilityId);
         if (facilityId == null) {
             throw new RuntimeException("Facility Id not defined.");
         }

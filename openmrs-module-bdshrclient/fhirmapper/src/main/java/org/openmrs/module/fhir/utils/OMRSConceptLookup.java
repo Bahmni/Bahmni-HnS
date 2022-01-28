@@ -3,7 +3,8 @@ package org.openmrs.module.fhir.utils;
 import ca.uhn.fhir.model.dstu2.composite.CodingDt;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.*;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.shrclient.dao.IdMappingRepository;
@@ -30,7 +31,7 @@ public class OMRSConceptLookup {
     public static final String TR_DRUG_REST_URL = "/ws/rest/v1/tr/drugs";
     public static final String WS_REST_V1_TR_CONCEPTS = "/ws/rest/v1/tr/concepts/";
 
-    private Logger logger = Logger.getLogger(OMRSConceptLookup.class);
+    private Logger logger = LogManager.getLogger(OMRSConceptLookup.class);
     private ConceptMapType conceptMapTypeByName;
 
     @Autowired

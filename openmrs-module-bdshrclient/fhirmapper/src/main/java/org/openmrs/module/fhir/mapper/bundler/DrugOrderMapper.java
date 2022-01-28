@@ -13,7 +13,8 @@ import ca.uhn.fhir.model.primitive.DateTimeDt;
 import ca.uhn.fhir.model.primitive.DecimalDt;
 import ca.uhn.fhir.model.primitive.StringDt;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.Concept;
 import org.openmrs.DrugOrder;
@@ -66,7 +67,7 @@ public class DrugOrderMapper implements EmrOrderResourceHandler {
     @Autowired
     private ProviderLookupService providerLookupService;
 
-    private static final Logger logger = Logger.getLogger(DrugOrderMapper.class);
+    private static final Logger logger = LogManager.getLogger(DrugOrderMapper.class);
 
     public DrugOrderMapper() {
         objectMapper = new ObjectMapper();

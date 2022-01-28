@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.dao;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.model.IdMapping;
 import org.openmrs.module.shrclient.model.IdMappingType;
 import org.openmrs.module.shrclient.util.Database;
@@ -24,7 +25,7 @@ public class IdMappingRepository {
     private OrderIdMappingDao orderIdMappingDao;
     private ProviderIdMappingDao providerIdMappingDao;
     Database database;
-    Logger logger = Logger.getLogger(IdMappingRepository.class);
+    Logger logger = LogManager.getLogger(IdMappingRepository.class);
 
 
     @Autowired

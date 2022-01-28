@@ -1,8 +1,7 @@
 package org.openmrs.module.shrclient.scheduler.tasks;
 
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.module.shrclient.handlers.EncounterPush;
 import org.openmrs.module.shrclient.handlers.PatientPush;
 import org.openmrs.module.shrclient.util.PropertiesReader;
@@ -10,7 +9,7 @@ import org.openmrs.module.shrclient.util.PropertiesReader;
 import java.net.URISyntaxException;
 
 public class BahmniSyncTask extends AbstractBahmniSyncTask {
-    private static final Logger log = Logger.getLogger(BahmniSyncTask.class);
+    private static final Logger log = LogManager.getLogger(BahmniSyncTask.class);
 
     @Override
     protected void executeBahmniTask(PatientPush patientPush, EncounterPush encounterPush, PropertiesReader propertiesReader) {

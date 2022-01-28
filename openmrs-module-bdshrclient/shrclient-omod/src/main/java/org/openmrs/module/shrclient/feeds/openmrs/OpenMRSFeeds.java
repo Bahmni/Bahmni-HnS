@@ -1,14 +1,15 @@
 package org.openmrs.module.shrclient.feeds.openmrs;
 
 import com.sun.syndication.feed.atom.Feed;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ict4h.atomfeed.client.repository.AllFeeds;
 import org.ict4h.atomfeed.server.service.EventFeedService;
 
 import java.net.URI;
 
 public class OpenMRSFeeds extends AllFeeds {
-    private static final Logger log = Logger.getLogger(OpenMRSFeeds.class);
+    private static final Logger log = LogManager.getLogger(OpenMRSFeeds.class);
 
     private EventFeedService eventFeedService;
     private URI emrPatientUpdateUri;

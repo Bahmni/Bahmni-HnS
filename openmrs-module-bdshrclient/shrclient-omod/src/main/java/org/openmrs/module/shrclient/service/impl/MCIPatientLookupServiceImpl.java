@@ -3,7 +3,8 @@ package org.openmrs.module.shrclient.service.impl;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.addresshierarchy.AddressHierarchyEntry;
@@ -32,7 +33,7 @@ import static java.util.Arrays.asList;
 
 @Service
 public class MCIPatientLookupServiceImpl implements MCIPatientLookupService {
-    private static final Logger log = Logger.getLogger(MCIPatientLookupServiceImpl.class);
+    private static final Logger log = LogManager.getLogger(MCIPatientLookupServiceImpl.class);
 
     private static final String NID_PARAM_KEY = "nid";
     private static final String UID_PARAM_KEY = "uid";

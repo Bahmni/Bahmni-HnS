@@ -1,6 +1,7 @@
 package org.openmrs.module.shrclient.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openmrs.BaseOpenmrsData;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
@@ -24,7 +25,7 @@ public class SystemUserService {
     private Database database;
     private GlobalPropertyLookUpService globalPropertyLookUpService;
 
-    private Logger logger = Logger.getLogger(SystemUserService.class);
+    private Logger logger = LogManager.getLogger(SystemUserService.class);
 
     public SystemUserService(UserService userService, Database database, GlobalPropertyLookUpService globalPropertyLookUpService) {
         this.userService = userService;
