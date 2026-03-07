@@ -17,6 +17,13 @@
         <module>omod</module>
     </modules>
 
+    <licenses>
+        <license>
+            <name>Mozilla Public License Version 2.0</name>
+            <url>https://www.bahmni.org/license/mplv2hd</url>
+        </license>
+    </licenses>
+
     <properties>
         <atomfeed.version>1.9.4</atomfeed.version>
         <openmrs.version>2.0.2</openmrs.version>

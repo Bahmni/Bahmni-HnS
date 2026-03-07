@@ -17,6 +17,13 @@
         <mockitoVersion>1.10.19</mockitoVersion>
     </properties>
 
+    <licenses>
+        <license>
+            <name>Mozilla Public License Version 2.0</name>
+            <url>https://www.bahmni.org/license/mplv2hd</url>
+        </license>
+    </licenses>
+
     <dependencies>
         <dependency>
             <groupId>ca.uhn.hapi.fhir</groupId>
