@@ -13,6 +13,13 @@
         <junitVersion>4.12</junitVersion>
         <mockitoVersion>1.10.19</mockitoVersion>
     </properties>
+    <licenses>
+        <license>
+            <name>Mozilla Public License Version 2.0</name>
+            <url>https://www.bahmni.org/license/mplv2hd</url>
+        </license>
+    </licenses>
+ 
     <dependencies>
         <dependency>
             <groupId>org.openmrs.api</groupId>
@@ -183,7 +190,7 @@
             <id>openmrs-repo</id>
             <name>OpenMRS Nexus Repository</name>
             <url>https://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
-        </repository>
+       </repository>
         <repository>
             <id>sonatype-nexus-repo-release</id>
             <name>Sonatype Nexus Repository</name>
